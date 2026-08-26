@@ -1,0 +1,2005 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SafeLife — New Pet + Baby Household · PRO</title>
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+/* ═══════════ THEME ENGINE ═══════════ */
+:root {
+  --navy:#0D1B2A; --navy-mid:#1A2F45;
+  --critical:#DC2626; --high:#EA580C; --medium:#D97706; --low:#16A34A;
+  --radius:12px;
+  --shadow:0 2px 12px rgba(13,27,42,0.08);
+  --shadow-lg:0 8px 32px rgba(13,27,42,0.14);
+}
+body[data-theme="chronic"] { --accent:#7A3B46; --accent-dark:#5F2E37; --accent-rgb:122,59,70; }
+body[data-theme="injury"] { --accent:#6E8CA0; --accent-dark:#56708D; --accent-rgb:110,140,160; }
+body[data-theme="teal"]   { --accent:#14B8A6; --accent-dark:#0D9488; --accent-rgb:20,184,166; }
+body[data-theme="amber"]  { --accent:#F59E0B; --accent-dark:#D97706; --accent-rgb:245,158,11; }
+body[data-theme="rose"]   { --accent:#E11D48; --accent-dark:#BE123C; --accent-rgb:225,29,72; }
+body[data-theme="violet"] { --accent:#7C3AED; --accent-dark:#6D28D9; --accent-rgb:124,58,237; }
+body[data-theme="ocean"]  { --accent:#2563EB; --accent-dark:#1D4ED8; --accent-rgb:37,99,235; }
+body[data-theme="forest"] { --accent:#16A34A; --accent-dark:#15803D; --accent-rgb:22,163,74; }
+body[data-theme="mobility"] { --accent:#3E6B8A; --accent-dark:#2F5268; --accent-rgb:62,107,138; }
+body[data-theme="sensory"] { --accent:#1B6E7A; --accent-dark:#134F57; --accent-rgb:27,110,122; }
+body[data-theme="caramel"] { --accent:#A9784F; --accent-dark:#7F5A3B; --accent-rgb:169,120,79; }
+body[data-mode="light"] {
+  --bg:#F9F6F0; --surface:#FFFFFF; --surface-2:#EDE6D6; --tile:#F9F6F0;
+  --ink:#0D1B2A; --ink-mid:#3A4A5C; --ink-soft:#6B7A8D; --line:#EDE6D6;
+  --critical-bg:#FEF2F2; --high-bg:#FFF7ED; --medium-bg:#FFFBEB; --low-bg:#F0FDF4;
+}
+body[data-mode="dark"] {
+  --bg:#0B1420; --surface:#13202F; --surface-2:#1C2C3E; --tile:#0F1A28;
+  --ink:#EDF2F7; --ink-mid:#B7C4D1; --ink-soft:#8194A7; --line:#243549;
+  --critical-bg:rgba(220,38,38,.16); --high-bg:rgba(234,88,12,.16);
+  --medium-bg:rgba(217,119,6,.16); --low-bg:rgba(22,163,74,.16);
+  --shadow:0 2px 12px rgba(0,0,0,0.35); --shadow-lg:0 8px 32px rgba(0,0,0,0.5);
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:'Inter',-apple-system,sans-serif;background:var(--bg);color:var(--ink);min-height:100vh;font-size:14px;line-height:1.6;-webkit-font-smoothing:antialiased;transition:background .3s,color .3s;}
+
+/* ═══════════ TOP BAR ═══════════ */
+.topbar{background:var(--navy);color:#fff;display:flex;align-items:center;justify-content:space-between;gap:10px;padding:8px 20px;min-height:58px;position:relative;z-index:300;border-bottom:2px solid var(--accent);flex-wrap:wrap;}
+.topbar-brand{display:flex;align-items:center;gap:12px;}
+.topbar-logo{width:34px;height:34px;background:linear-gradient(135deg,var(--accent),var(--accent-dark));border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:18px;font-weight:800;font-family:'Sora',sans-serif;color:#fff;box-shadow:0 2px 8px rgba(var(--accent-rgb),.4);}
+.topbar-name{font-family:'Sora',sans-serif;font-size:17px;font-weight:700;letter-spacing:-.3px;}
+.topbar-name span{color:var(--accent);}
+.topbar-tagline{font-size:11px;color:rgba(255,255,255,.5);font-style:italic;}
+.topbar-meta{display:flex;align-items:center;gap:8px;flex-wrap:wrap;}
+.progress-pill{background:rgba(var(--accent-rgb),.15);border:1px solid rgba(var(--accent-rgb),.3);border-radius:20px;padding:4px 14px;font-size:12px;font-weight:600;color:var(--accent);display:flex;align-items:center;gap:6px;white-space:nowrap;}
+.progress-pill span{color:#fff;font-size:13px;}
+.toolbar{display:flex;gap:6px;flex-wrap:wrap;}
+.tool-btn{background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.15);color:#fff;border-radius:8px;padding:6px 10px;font-size:13px;cursor:pointer;font-family:'Inter',sans-serif;font-weight:600;display:flex;align-items:center;gap:5px;transition:all .2s;position:relative;}
+.tool-btn:hover{background:rgba(var(--accent-rgb),.3);border-color:var(--accent);}
+.tool-btn .tb-label{font-size:11px;}
+@media(max-width:820px){.tool-btn .tb-label{display:none;}.topbar-tagline{display:none;}}
+
+/* ═══════════ DROPDOWN PANELS ═══════════ */
+.dropdown{position:absolute;top:calc(100% + 8px);right:0;background:var(--surface);border:1px solid var(--line);border-radius:12px;box-shadow:var(--shadow-lg);padding:10px;display:none;z-index:400;min-width:190px;}
+.dropdown.open{display:block;}
+.dropdown-title{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.7px;color:var(--ink-soft);padding:4px 8px 8px;}
+.theme-row{display:flex;align-items:center;gap:10px;width:100%;padding:8px;border:none;background:none;border-radius:8px;cursor:pointer;font-family:'Inter',sans-serif;font-size:13px;font-weight:600;color:var(--ink);text-align:left;}
+.theme-row:hover{background:rgba(var(--accent-rgb),.08);}
+.theme-row.selected{background:rgba(var(--accent-rgb),.12);}
+.theme-swatch{width:18px;height:18px;border-radius:6px;flex-shrink:0;}
+.theme-row .check-mark{margin-left:auto;color:var(--accent);font-weight:800;}
+
+/* ═══════════ HERO ═══════════ */
+.hero{background:linear-gradient(135deg,var(--navy) 0%,var(--navy-mid) 60%,#2A1B0E 100%);padding:48px 32px 40px;text-align:center;position:relative;overflow:hidden;}
+.hero::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at 70% 50%,rgba(var(--accent-rgb),.14) 0%,transparent 60%);}
+.hero-emoji{font-size:64px;line-height:1;margin-bottom:12px;display:block;position:relative;}
+.hero-title{font-family:'Sora',sans-serif;font-size:32px;font-weight:800;color:#fff;margin-bottom:6px;position:relative;}
+.hero-subtitle{font-size:15px;color:rgba(255,255,255,.65);margin-bottom:20px;position:relative;}
+.hero-badges{display:flex;justify-content:center;gap:10px;flex-wrap:wrap;position:relative;}
+.hero-badge{background:rgba(var(--accent-rgb),.15);border:1px solid rgba(var(--accent-rgb),.35);border-radius:20px;padding:5px 14px;font-size:12px;font-weight:600;color:var(--accent);display:flex;align-items:center;gap:5px;cursor:pointer;transition:background .2s,transform .15s;user-select:none;}
+.hero-badge:hover{background:rgba(var(--accent-rgb),.28);transform:translateY(-1px);}
+
+/* ═══════════ PROGRESS ═══════════ */
+.progress-section{background:var(--surface);border-bottom:1px solid var(--line);padding:0 32px;height:46px;display:flex;align-items:center;gap:20px;position:sticky;top:0;z-index:290;box-shadow:0 2px 8px rgba(13,27,42,.06);}
+.progress-label{font-size:12px;font-weight:600;color:var(--ink-soft);white-space:nowrap;}
+.progress-track{flex:1;height:8px;background:var(--surface-2);border-radius:4px;overflow:hidden;}
+.progress-fill{height:100%;background:linear-gradient(90deg,var(--accent),var(--accent-dark));border-radius:4px;width:0%;transition:width .4s ease;}
+.progress-count{font-size:13px;font-weight:700;color:var(--accent);white-space:nowrap;}
+.celebrate{display:none;background:linear-gradient(135deg,rgba(var(--accent-rgb),.15),rgba(var(--accent-rgb),.05));border-bottom:1px solid rgba(var(--accent-rgb),.3);padding:14px 32px;text-align:center;font-weight:700;color:var(--accent-dark);font-size:15px;font-family:'Sora',sans-serif;}
+.celebrate.show{display:block;}
+
+/* ═══════════ SEARCH ═══════════ */
+.search-wrap{padding:20px 20px 0;max-width:860px;margin:0 auto;}
+.search-box{width:100%;padding:10px 16px 10px 40px;border:1px solid var(--line);border-radius:8px;background:var(--surface);font-size:14px;font-family:'Inter',sans-serif;color:var(--ink);outline:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%236B7A8D' stroke-width='2'%3E%3Ccircle cx='11' cy='11' r='8'/%3E%3Cpath d='m21 21-4.35-4.35'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:12px center;transition:border-color .2s;}
+.search-box:focus{border-color:var(--accent);box-shadow:0 0 0 3px rgba(var(--accent-rgb),.1);}
+.search-no-results{text-align:center;padding:40px;color:var(--ink-soft);font-size:14px;display:none;}
+
+/* ═══════════ ZONE TABS ═══════════ */
+.zone-tabs{background:var(--surface);border-bottom:2px solid var(--line);display:flex;overflow-x:auto;padding:0 24px;gap:4px;scrollbar-width:none;position:sticky;top:46px;z-index:200;}
+.zone-tabs::-webkit-scrollbar{display:none;}
+.zone-tab{display:flex;align-items:center;gap:7px;padding:14px 18px;border:none;background:none;cursor:pointer;font-family:'Inter',sans-serif;font-size:13px;font-weight:600;color:var(--ink-soft);white-space:nowrap;border-bottom:3px solid transparent;transition:all .2s;margin-bottom:-2px;}
+.zone-tab:hover{color:var(--accent);background:rgba(var(--accent-rgb),.05);}
+.zone-tab.active{color:var(--accent);border-bottom-color:var(--accent);}
+.zone-tab-count{background:var(--surface-2);border-radius:10px;padding:1px 7px;font-size:11px;font-weight:700;color:var(--ink-soft);}
+.zone-tab.active .zone-tab-count{background:rgba(var(--accent-rgb),.15);color:var(--accent);}
+
+/* ═══════════ MAIN / STATS ═══════════ */
+.main{max-width:860px;margin:0 auto;padding:28px 20px 60px;}
+.stats-bar{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:20px;align-items:center;}
+.stat-pill{display:flex;align-items:center;gap:6px;background:var(--surface);border:1px solid var(--line);border-radius:8px;padding:8px 14px;font-size:12px;font-weight:600;cursor:pointer;transition:all .2s;user-select:none;}
+.stat-pill:hover{border-color:var(--accent);}
+.stat-pill.filter-on{border-color:var(--accent);background:rgba(var(--accent-rgb),.08);box-shadow:0 0 0 2px rgba(var(--accent-rgb),.15);}
+.stat-dot{width:8px;height:8px;border-radius:50%;}
+.stat-dot.critical{background:var(--critical);}.stat-dot.high{background:var(--high);}.stat-dot.medium{background:var(--medium);}.stat-dot.low{background:var(--low);}
+.stat-count{font-size:15px;font-weight:700;}
+.risk-legend{display:flex;gap:12px;flex-wrap:wrap;margin-left:auto;}
+.legend-item{display:flex;align-items:center;gap:5px;font-size:11px;font-weight:600;color:var(--ink-soft);}
+.legend-dot{width:8px;height:8px;border-radius:3px;}
+
+/* ═══════════ ZONE PANEL ═══════════ */
+.zone-panel{display:none;}
+.zone-panel.active{display:block;}
+.zone-header{display:flex;align-items:center;gap:14px;margin-bottom:24px;padding:20px 24px;background:var(--surface);border-radius:var(--radius);border:1px solid rgba(var(--accent-rgb),.2);box-shadow:var(--shadow);}
+.zone-icon{width:52px;height:52px;background:linear-gradient(135deg,rgba(var(--accent-rgb),.12),rgba(var(--accent-rgb),.06));border:2px solid rgba(var(--accent-rgb),.25);border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:24px;}
+.zone-header-text h2{font-family:'Sora',sans-serif;font-size:20px;font-weight:700;color:var(--ink);margin-bottom:3px;}
+.zone-header-text p{font-size:13px;color:var(--ink-soft);}
+
+/* ═══════════ CHECK CARDS ═══════════ */
+.checks-list{display:flex;flex-direction:column;gap:10px;}
+.check-card{background:var(--surface);border-radius:var(--radius);border:1px solid var(--line);box-shadow:var(--shadow);overflow:hidden;transition:box-shadow .2s;}
+.check-card:hover{box-shadow:var(--shadow-lg);}
+.check-card.completed{border-color:rgba(var(--accent-rgb),.3);background:rgba(var(--accent-rgb),.03);}
+.check-header{display:flex;align-items:center;gap:12px;padding:14px 18px;cursor:pointer;user-select:none;}
+.check-checkbox{width:22px;height:22px;min-width:22px;border:2px solid var(--surface-2);border-radius:6px;display:flex;align-items:center;justify-content:center;cursor:pointer;transition:all .2s;font-size:13px;background:var(--surface);}
+.check-card.completed .check-checkbox{background:var(--accent);border-color:var(--accent);color:#fff;}
+.check-num{font-size:10px;font-weight:700;color:var(--ink-soft);min-width:30px;font-family:'Sora',sans-serif;}
+.check-risk{font-size:10px;font-weight:700;padding:3px 8px;border-radius:6px;text-transform:uppercase;letter-spacing:.5px;white-space:nowrap;}
+.risk-critical{background:var(--critical-bg);color:var(--critical);}
+.risk-high{background:var(--high-bg);color:var(--high);}
+.risk-medium{background:var(--medium-bg);color:var(--medium);}
+.risk-low{background:var(--low-bg);color:var(--low);}
+.check-title{flex:1;font-size:14px;font-weight:600;color:var(--ink);line-height:1.4;}
+.check-card.completed .check-title{color:var(--ink-soft);text-decoration:line-through;}
+.check-chevron{font-size:12px;color:var(--ink-soft);transition:transform .25s;min-width:16px;}
+.check-card.open .check-chevron{transform:rotate(180deg);}
+.check-detail{display:none;padding:0 18px 18px 18px;border-top:1px solid var(--line);}
+.check-card.open .check-detail{display:block;}
+.detail-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:14px;}
+@media(max-width:600px){.detail-grid{grid-template-columns:1fr;}}
+.detail-item{background:var(--tile);border-radius:8px;padding:11px 13px;}
+.detail-item.full{grid-column:1/-1;}
+.detail-label{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.7px;color:var(--accent-dark);margin-bottom:4px;display:flex;align-items:center;gap:5px;}
+body[data-mode="dark"] .detail-label{color:var(--accent);}
+.detail-value{font-size:13px;color:var(--ink);line-height:1.55;}
+.tip-box{margin-top:12px;background:linear-gradient(135deg,rgba(var(--accent-rgb),.08),rgba(var(--accent-rgb),.04));border:1px solid rgba(var(--accent-rgb),.25);border-left:4px solid var(--accent);border-radius:8px;padding:11px 14px;display:flex;gap:10px;align-items:flex-start;}
+.tip-icon{font-size:16px;line-height:1;margin-top:1px;}
+.tip-text{font-size:13px;color:var(--ink);line-height:1.55;}
+.tip-text strong{color:var(--accent-dark);font-weight:700;}
+body[data-mode="dark"] .tip-text strong{color:var(--accent);}
+.measurement-box{margin-top:10px;background:rgba(var(--accent-rgb),.05);border:1px solid var(--line);border-radius:8px;padding:10px 13px;font-size:12px;color:var(--ink-mid);line-height:1.5;font-family:'Sora',sans-serif;}
+.measurement-box strong{color:var(--ink);font-size:11px;text-transform:uppercase;letter-spacing:.5px;display:block;margin-bottom:3px;}
+
+/* ═══════════ ZONE ACTIONS ═══════════ */
+.zone-actions{display:flex;justify-content:flex-end;gap:10px;margin:14px 0 18px;flex-wrap:wrap;}
+.btn{padding:9px 18px;border-radius:8px;font-family:'Inter',sans-serif;font-size:13px;font-weight:600;cursor:pointer;border:none;transition:all .2s;}
+.btn-outline{background:var(--surface);border:1px solid var(--line);color:var(--ink-mid);}
+.btn-outline:hover{border-color:var(--accent);color:var(--accent);}
+.btn-primary{background:linear-gradient(135deg,var(--accent),var(--accent-dark));color:#fff;box-shadow:0 2px 8px rgba(var(--accent-rgb),.3);}
+.btn-primary:hover{box-shadow:0 4px 16px rgba(var(--accent-rgb),.4);transform:translateY(-1px);}
+
+/* ═══════════ MODALS ═══════════ */
+.modal-overlay{position:fixed;inset:0;background:rgba(13,27,42,.6);z-index:500;display:none;align-items:flex-start;justify-content:center;padding:40px 16px;overflow-y:auto;backdrop-filter:blur(3px);}
+.modal-overlay.open{display:flex;}
+.modal{background:var(--surface);border-radius:16px;max-width:640px;width:100%;box-shadow:var(--shadow-lg);border-top:4px solid var(--accent);}
+.modal-head{display:flex;align-items:center;justify-content:space-between;padding:18px 24px;border-bottom:1px solid var(--line);}
+.modal-head h3{font-family:'Sora',sans-serif;font-size:18px;color:var(--ink);display:flex;align-items:center;gap:8px;}
+.modal-close{background:none;border:none;font-size:22px;color:var(--ink-soft);cursor:pointer;line-height:1;padding:4px;}
+.modal-close:hover{color:var(--accent);}
+.modal-body{padding:20px 24px 26px;color:var(--ink-mid);font-size:13.5px;}
+.modal-body h4{font-family:'Sora',sans-serif;font-size:14px;color:var(--ink);margin:16px 0 6px;display:flex;align-items:center;gap:6px;}
+.modal-body h4:first-child{margin-top:0;}
+.modal-body p{margin-bottom:8px;}
+.modal-body table{width:100%;border-collapse:collapse;font-size:12.5px;margin:8px 0;}
+.modal-body th{text-align:left;padding:7px 10px;background:rgba(var(--accent-rgb),.1);color:var(--ink);font-size:11px;text-transform:uppercase;letter-spacing:.5px;}
+.modal-body td{padding:7px 10px;border-bottom:1px solid var(--line);color:var(--ink-mid);}
+.modal-body td strong{color:var(--ink);}
+.modal-actions{display:flex;gap:10px;justify-content:flex-end;padding:0 24px 22px;flex-wrap:wrap;}
+.rule-list{list-style:none;margin:6px 0;}
+.rule-list li{padding:6px 0 6px 26px;position:relative;border-bottom:1px dashed var(--line);}
+.rule-list li::before{content:'✓';position:absolute;left:2px;color:var(--accent);font-weight:800;}
+
+/* ═══════════ COLLECTION / UPSELL ═══════════ */
+.collection{max-width:860px;margin:0 auto;padding:10px 20px 50px;}
+.collection h3{font-family:'Sora',sans-serif;font-size:18px;color:var(--ink);margin-bottom:4px;}
+.collection>p{font-size:13px;color:var(--ink-soft);margin-bottom:16px;}
+.collection-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(190px,1fr));gap:10px;}
+.module-card{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:14px;display:flex;flex-direction:column;gap:4px;transition:all .2s;}
+.module-card:hover{border-color:var(--accent);box-shadow:var(--shadow);}
+.module-card .m-emoji{font-size:26px;}
+.module-card .m-name{font-family:'Sora',sans-serif;font-weight:700;font-size:13.5px;color:var(--ink);}
+.module-card .m-age{font-size:11.5px;color:var(--ink-soft);}
+.module-tag{margin-top:6px;font-size:10.5px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;border-radius:6px;padding:3px 8px;align-self:flex-start;}
+.module-tag.owned{background:rgba(var(--accent-rgb),.15);color:var(--accent-dark);}
+body[data-mode="dark"] .module-tag.owned{color:var(--accent);}
+.module-tag.addon{background:var(--surface-2);color:var(--ink-soft);}
+.module-tag.coming{background:transparent;color:var(--ink-soft);border:1px dashed var(--line);}
+
+/* ═══════════ FOOTER ═══════════ */
+.footer{background:var(--navy);color:rgba(255,255,255,.5);text-align:center;padding:24px;font-size:12px;line-height:1.8;}
+.footer strong{color:rgba(255,255,255,.8);}
+
+/* ═══════════ TRADEMARK ICON SET ═══════════ */
+.zic svg{width:16px;height:16px;vertical-align:-3px;}
+.zone-tab .zic svg{color:inherit;}
+.topbar-logo svg{width:22px;height:22px;color:#fff;}
+.hero-emoji svg{width:72px;height:72px;color:var(--accent);filter:drop-shadow(0 4px 14px rgba(var(--accent-rgb),.45));}
+.zone-icon svg{width:27px;height:27px;color:var(--accent-dark);}
+body[data-mode="dark"] .zone-icon svg{color:var(--accent);}
+.module-card .m-emoji svg{width:30px;height:30px;color:var(--accent-dark);}
+body[data-mode="dark"] .module-card .m-emoji svg{color:var(--accent);}
+
+/* ═══════════ FLOATING NAV / DISCLAIMERS ═══════════ */
+html{scroll-behavior:smooth;}
+.float-nav{position:fixed;right:16px;bottom:20px;display:flex;flex-direction:column;gap:8px;z-index:250;}
+html[dir="rtl"] .float-nav{right:auto;left:16px;}
+.float-btn{width:42px;height:42px;border-radius:50%;border:1px solid var(--line);background:var(--surface);color:var(--accent-dark);font-size:18px;font-weight:800;cursor:pointer;box-shadow:var(--shadow-lg);transition:all .2s;}
+.float-btn:hover{background:var(--accent);color:#fff;border-color:var(--accent);transform:translateY(-2px);}
+body[data-mode="dark"] .float-btn{color:var(--accent);}
+.zone-disclaimer{margin-top:18px;padding:10px 14px;border:1px dashed var(--line);border-radius:8px;font-size:11.5px;color:var(--ink-soft);text-align:center;}
+.print-disclaimer{display:none;}
+
+/* ═══════════ PRINT ═══════════ */
+#cheat-print{display:none;}
+@media print{
+  body{background:#fff !important;color:#000;font-size:11px;margin:0 !important;padding:0 !important;}
+  .topbar,.hero,.search-wrap,.zone-tabs,.progress-section,.zone-actions,.stats-bar,.collection,.modal-overlay,.celebrate,.dropdown{display:none !important;}
+  .main{max-width:100%;padding:0 0 30px;}
+  .check-card{box-shadow:none;border:1px solid #ccc;page-break-inside:avoid;margin-bottom:6px;}
+  .check-detail{display:block !important;border-top:1px solid #ddd;}
+  .check-chevron{display:none;}
+  .zone-panel{display:block !important;page-break-before:auto;}
+  .zone-header{box-shadow:none;border:1px solid #ccc;margin-top:14px;}
+  body.print-zone .zone-panel{display:none !important;}
+  body.print-zone .zone-panel.active{display:block !important;}
+  body.print-cheat .main,body.print-cheat .footer,body.print-cheat .zone-panel,body.print-cheat .print-disclaimer{display:none !important;}
+  body.print-cheat #cheat-print{display:block !important;}
+  #cheat-print{margin:0;padding:0;-webkit-print-color-adjust:exact;print-color-adjust:exact;}
+  .cp-card{border:2.5px solid #0D1B2A;border-radius:16px;overflow:hidden;font-family:'Inter',sans-serif;color:#0D1B2A;height:272mm;display:flex;flex-direction:column;page-break-inside:avoid;page-break-after:avoid;}
+  .cp-head{background:#0D1B2A !important;color:#fff;display:flex;align-items:center;gap:12px;padding:13px 22px;}
+  .cp-head svg{width:38px;height:38px;color:var(--accent);}
+  .cp-title{font-family:'Sora',sans-serif;font-size:20px;font-weight:800;line-height:1.2;}
+  .cp-title em{color:var(--accent);font-style:normal;}
+  .cp-sub{font-size:11.5px;color:rgba(255,255,255,.78);margin-top:2px;}
+  .cp-tag{margin-left:auto;font-size:10px;font-style:italic;color:rgba(255,255,255,.65);text-align:right;}
+  .cp-contacts{display:grid;grid-template-columns:repeat(4,1fr);gap:6px;padding:11px 22px;background:rgba(var(--accent-rgb),.09) !important;}
+  .cp-chip{border:1.2px solid rgba(var(--accent-rgb),.55);border-radius:8px;padding:5px 9px;background:#fff !important;}
+  .cp-chip b{display:block;font-size:8.5px;text-transform:uppercase;letter-spacing:.3px;color:var(--accent-dark);}
+  .cp-chip span{font-size:12px;font-weight:700;}
+  .cp-cols{display:flex;gap:20px;padding:13px 22px 6px;flex:1;min-height:0;overflow:hidden;}
+  .cp-cols h3{font-family:'Sora',sans-serif;font-size:13px;border-bottom:2px solid var(--accent);padding-bottom:3px;margin:0 0 8px;}
+  .cp-rules{flex:1.15;}
+  .cp-rules ul{list-style:none;margin:0;padding:0;}
+  .cp-rules li{font-size:11px;line-height:1.5;padding:4px 0 4px 18px;position:relative;border-bottom:1px dashed #ddd;}
+  .cp-rules li::before{content:'✓';position:absolute;left:0;color:var(--accent-dark);font-weight:800;}
+  html[dir="rtl"] .cp-rules li{padding:4px 18px 4px 0;}
+  html[dir="rtl"] .cp-rules li::before{left:auto;right:0;}
+  .cp-numsec{flex:1;}
+  .cp-numsec table{width:100%;border-collapse:collapse;font-size:10.5px;}
+  .cp-numsec td{border-bottom:1px solid #eee;padding:4px 5px;vertical-align:top;}
+  .cp-numsec td strong{color:#0D1B2A;}
+  .cp-notes{margin:6px 22px 10px;border:1.5px dashed var(--accent);border-radius:10px;padding:8px 13px;font-size:11px;white-space:pre-wrap;max-height:34mm;overflow:hidden;}
+  .cp-notes b{font-size:9px;text-transform:uppercase;letter-spacing:.5px;color:var(--accent-dark);display:block;margin-bottom:2px;}
+  .cp-foot{display:flex;align-items:center;justify-content:space-between;gap:14px;background:#0D1B2A !important;color:rgba(255,255,255,.85);padding:9px 22px;font-size:10px;line-height:1.55;margin-top:auto;}
+  .cp-foot b{color:var(--accent);}
+  .cp-qr{display:flex;align-items:center;gap:10px;text-align:right;}
+  .cp-qr img{width:68px;height:68px;background:#fff;border-radius:8px;padding:3px;}
+  .cp-qr .qr-ph{width:68px;height:68px;border:1.5px dashed rgba(255,255,255,.5);border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:8.5px;text-align:center;color:rgba(255,255,255,.6);padding:4px;}
+  .footer{background:#fff;color:#555;}
+  .footer strong{color:#000;}
+  .float-nav{display:none !important;}
+  .print-disclaimer{display:block !important;position:fixed;bottom:0;left:0;right:0;text-align:center;font-size:8.5px;color:#666;border-top:1px solid #ccc;padding:3px 0;background:#fff;}
+  @page{size:A4;margin:10mm 10mm 12mm;}
+}
+</style>
+</head>
+<body data-theme="caramel" data-mode="light">
+
+<!-- TOP BAR -->
+<header class="topbar">
+  <div class="topbar-brand">
+    <div class="topbar-logo" id="logo-icon">S</div>
+    <div>
+      <div class="topbar-name">Safe<span>Life</span></div>
+      <div class="topbar-tagline">To all moms by a mom · NEBOSH &amp; OSHA Professional</div>
+    </div>
+  </div>
+  <div class="topbar-meta">
+    <div class="toolbar">
+      <button class="tool-btn" id="btn-search" title="Search all checks">🔍</button>
+      <button class="tool-btn" id="btn-manual" title="User Manual">📖<span class="tb-label" data-i18n="manual">Manual</span></button>
+      <button class="tool-btn" id="btn-cheat" title="Emergency Cheat Sheet">🚨<span class="tb-label" data-i18n="cheat">Cheat Sheet</span></button>
+      <button class="tool-btn" id="btn-print" title="Print / Save as PDF">🖨️<span class="tb-label" data-i18n="printPdf">Print / PDF</span></button>
+      <button class="tool-btn" id="btn-save" title="Save progress to file">💾<span class="tb-label" data-i18n="save">Save</span></button>
+      <button class="tool-btn" id="btn-load" title="Load saved progress">📂<span class="tb-label" data-i18n="load">Load</span></button>
+      <button class="tool-btn" id="btn-lang" title="Language" style="display:none">🌐<span class="tb-label" id="lang-label">EN</span>
+        <div class="dropdown" id="dd-lang"></div>
+      </button>
+      <button class="tool-btn" id="btn-theme" title="Colour theme">🎨<span class="tb-label" data-i18n="theme">Theme</span>
+        <div class="dropdown" id="dd-theme"></div>
+      </button>
+      <button class="tool-btn" id="btn-mode" title="Light / dark mode">🌙</button>
+    </div>
+    <div class="progress-pill"><span id="topbar-done">0</span>&nbsp;/ 84 <span data-i18n="checksDone" style="color:inherit;font-size:12px;">checks done</span></div>
+  </div>
+</header>
+
+<!-- HERO -->
+<div class="hero">
+  <span class="hero-emoji" id="hero-icon">🐾</span>
+  <div class="hero-title" data-i18n="heroTitle">New Pet + Baby Household</div>
+  <div class="hero-subtitle" data-i18n="heroSub">84 practical safety checks across 6 zones · Helping your family safely and happily welcome a new baby into a home with beloved pets</div>
+  <div class="hero-badges">
+    <div class="hero-badge" data-zone="1"><span class="zic" data-zi="z1"></span> <span data-i18n="bz1">Before Baby Comes Home</span></div>
+    <div class="hero-badge" data-zone="2"><span class="zic" data-zi="z2"></span> <span data-i18n="bz2">First Introductions &amp; Early Weeks</span></div>
+    <div class="hero-badge" data-zone="3"><span class="zic" data-zi="z3"></span> <span data-i18n="bz3">Zoonotic Disease &amp; Hygiene</span></div>
+    <div class="hero-badge" data-zone="4"><span class="zic" data-zi="z4"></span> <span data-i18n="bz4">Feeding, Sleep &amp; Shared Spaces</span></div>
+    <div class="hero-badge" data-zone="5"><span class="zic" data-zi="z5"></span> <span data-i18n="bz5">Supervision as Baby Grows</span></div>
+    <div class="hero-badge" data-zone="6"><span class="zic" data-zi="z6"></span> <span data-i18n="bz6">Ongoing Household Management</span></div>
+  </div>
+</div>
+
+<!-- PROGRESS -->
+<div class="progress-section">
+  <div class="progress-label" data-i18n="overallProgress">Overall Progress</div>
+  <div class="progress-track"><div class="progress-fill" id="progress-fill"></div></div>
+  <div class="progress-count" id="progress-count">0 of 84</div>
+</div>
+<div class="celebrate" id="celebrate">🎉 <span data-i18n="celebrate">All 84 checks complete — your household is set up for a safe, happy life together for your baby and your pets. Print your checklist as a keepsake.</span></div>
+
+<!-- SEARCH -->
+<div class="search-wrap">
+  <input class="search-box" type="text" id="search-input" placeholder="Search checks… e.g. resource guarding, litter box, toxoplasmosis, baby gate, scent introduction, crate training, tail pulling…">
+</div>
+
+<!-- ZONE TABS -->
+<div class="zone-tabs" id="zone-tabs">
+  <button class="zone-tab active" data-zone="1"><span class="zic" data-zi="z1"></span> <span data-i18n="z1">Before Baby Comes Home</span> <span class="zone-tab-count" id="ztc-1">0/14</span></button>
+  <button class="zone-tab" data-zone="2"><span class="zic" data-zi="z2"></span> <span data-i18n="z2">First Introductions &amp; Early Weeks</span> <span class="zone-tab-count" id="ztc-2">0/14</span></button>
+  <button class="zone-tab" data-zone="3"><span class="zic" data-zi="z3"></span> <span data-i18n="z3">Zoonotic Disease Prevention &amp; Hygiene</span> <span class="zone-tab-count" id="ztc-3">0/14</span></button>
+  <button class="zone-tab" data-zone="4"><span class="zic" data-zi="z4"></span> <span data-i18n="z4">Feeding, Sleep &amp; Shared Spaces</span> <span class="zone-tab-count" id="ztc-4">0/14</span></button>
+  <button class="zone-tab" data-zone="5"><span class="zic" data-zi="z5"></span> <span data-i18n="z5">Supervision Rules as Baby Grows</span> <span class="zone-tab-count" id="ztc-5">0/14</span></button>
+  <button class="zone-tab" data-zone="6"><span class="zic" data-zi="z6"></span> <span data-i18n="z6">Ongoing Household Management &amp; Care</span> <span class="zone-tab-count" id="ztc-6">0/14</span></button>
+</div>
+
+<!-- MAIN -->
+<div class="main" id="main-content">
+  <div class="stats-bar" id="stats-bar">
+    <div class="stat-pill" data-risk="critical"><span class="stat-dot critical"></span><span class="stat-count" id="s-critical">0</span> <span data-i18n="critical">Critical</span></div>
+    <div class="stat-pill" data-risk="high"><span class="stat-dot high"></span><span class="stat-count" id="s-high">0</span> <span data-i18n="high">High</span></div>
+    <div class="stat-pill" data-risk="medium"><span class="stat-dot medium"></span><span class="stat-count" id="s-medium">0</span> <span data-i18n="medium">Medium</span></div>
+    <div class="stat-pill" data-risk="low"><span class="stat-dot low"></span><span class="stat-count" id="s-low">0</span> <span data-i18n="low">Low</span></div>
+    <div class="risk-legend">
+      <div class="legend-item"><div class="legend-dot" style="background:var(--critical)"></div><span data-i18n="legendCritical">Critical = immediate action</span></div>
+      <div class="legend-item"><div class="legend-dot" style="background:var(--high)"></div><span data-i18n="legendHigh">High = urgent attention</span></div>
+    </div>
+  </div>
+  <div id="search-no-results" class="search-no-results"><span data-i18n="noResults">No checks match your search. Try different keywords.</span><br><span data-i18n="notCovered" style="font-size:12.5px;"></span></div>
+</div>
+
+<!-- COLLECTION -->
+<div class="collection">
+  <h3 data-i18n="collTitle">The SafeLife Collection</h3>
+  <p data-i18n="collSub">One safety system for every stage of life. Add more modules any time — each works exactly like this one.</p>
+  <div class="collection-grid" id="collection-grid"></div>
+</div>
+
+<!-- SITUATION MODULES -->
+<div class="collection" style="padding-top:0;">
+  <h3>Situation Modules</h3>
+  <p>Real-life situations and conditions — each its own complete, standalone 84-check system. Available separately as they launch.</p>
+  <div class="collection-grid" id="situation-grid"></div>
+</div>
+
+<!-- FOOTER -->
+<footer class="footer">
+  <strong>SafeLife</strong> · New Pet + Baby Household Module · PRO Edition<br>
+  Created by a NEBOSH &amp; OSHA trained HSE professional · "To all moms by a mom"<br>
+  Evidence base: CDC and WHO guidance on toxoplasmosis and zoonotic disease prevention · AVMA guidance on pet-child household safety · recognised paediatric and veterinary behaviour guidance on infant-pet supervision<br>
+  <span style="color:rgba(255,255,255,.35);" data-i18n="disclaimer">This checklist is educational general safety guidance for welcoming a baby into a home with pets. Pregnant household members and anyone who is immunocompromised should discuss toxoplasmosis and other zoonotic disease risk specifically with their own healthcare provider. For pet behaviour concerns, consult your veterinarian or a qualified animal behaviourist for advice specific to your household.</span>
+</footer>
+
+<!-- MODALS -->
+<div class="modal-overlay" id="modal-manual">
+  <div class="modal">
+    <div class="modal-head"><h3>📖 <span data-i18n="manualTitle">User Manual</span></h3><button class="modal-close" data-close="modal-manual">✕</button></div>
+    <div class="modal-body" id="manual-body"></div>
+  </div>
+</div>
+
+<div class="modal-overlay" id="modal-cheat">
+  <div class="modal">
+    <div class="modal-head"><h3>🚨 <span data-i18n="cheatTitle">Emergency Cheat Sheet</span></h3><button class="modal-close" data-close="modal-cheat">✕</button></div>
+    <div class="modal-body" id="cheat-body"></div>
+    <div class="modal-actions"><button class="btn btn-outline" id="btn-seller" title="Seller: set this product's QR code" style="margin-right:auto;">⚙</button><button class="btn btn-primary" id="btn-print-cheat" data-i18n="printCheat">🖨️ Print cheat sheet</button></div>
+  </div>
+</div>
+
+<div class="modal-overlay" id="modal-seller">
+  <div class="modal">
+    <div class="modal-head"><h3>⚙ Seller Settings</h3><button class="modal-close" data-close="modal-seller">✕</button></div>
+    <div class="modal-body" id="seller-body"></div>
+  </div>
+</div>
+
+<div class="modal-overlay" id="modal-print">
+  <div class="modal">
+    <div class="modal-head"><h3>🖨️ <span data-i18n="printTitle">Print or Save as PDF</span></h3><button class="modal-close" data-close="modal-print">✕</button></div>
+    <div class="modal-body">
+      <p data-i18n="printHint">Choose what to print. To save as a PDF instead of printing on paper, choose "Save as PDF" as the printer in the print dialog.</p>
+      <p style="font-size:12.5px;color:var(--ink-soft);margin-top:6px;" data-i18n="printNote">All checks are automatically expanded to full detail when printing — no need to open them first.</p>
+    </div>
+    <div class="modal-actions">
+      <button class="btn btn-outline" id="print-zone" data-i18n="printZone">Current zone only</button>
+      <button class="btn btn-outline" id="print-cheat2" data-i18n="printCheat2">Cheat sheet</button>
+      <button class="btn btn-primary" id="print-all" data-i18n="printAll">Full checklist (all 84)</button>
+    </div>
+  </div>
+</div>
+
+<input type="file" id="load-file" accept=".json" style="display:none">
+
+<!-- FLOATING CHECK NAVIGATION -->
+<div class="float-nav">
+  <button class="float-btn" id="fn-top" title="Back to top">⤒</button>
+  <button class="float-btn" id="fn-prev" title="Previous check">↑</button>
+  <button class="float-btn" id="fn-next" title="Next check">↓</button>
+</div>
+
+<!-- PRINT PAGE DISCLAIMER (repeats on every printed page) -->
+<div class="print-disclaimer" data-i18n="disclaimer">This checklist is educational general safety guidance for welcoming a baby into a home with pets. Pregnant household members and anyone who is immunocompromised should discuss toxoplasmosis and other zoonotic disease risk specifically with their own healthcare provider. For pet behaviour concerns, consult your veterinarian or a qualified animal behaviourist for advice specific to your household.</div>
+
+<div id="cheat-print"></div>
+
+<script>
+// ═══════════════════════════════════════════
+// SELLER BRANDING — edit these three lines to make it yours
+// ═══════════════════════════════════════════
+const BRAND_NAME = 'The Snag Tag';
+const STORE_URL  = '';   // e.g. 'thesnagtag.gumroad.com' — printed under the QR code on the cheat sheet
+const QR_IMAGE   = '';   // paste your QR code as a data URL: 'data:image/png;base64,...'
+
+// ═══════════════════════════════════════════
+// I18N — interface language pack (English-only release; check content in English, verified guidance)
+// ═══════════════════════════════════════════
+const I18N = {
+en:{name:'English',manual:'Manual',cheat:'Cheat Sheet',printPdf:'Print / PDF',save:'Save',load:'Load',theme:'Theme',checksDone:'checks done',heroTitle:'New Pet + Baby Household',heroSub:'84 practical safety checks across 6 zones · Helping your family safely and happily welcome a new baby into a home with beloved pets',bz1:'Before Baby Comes Home',bz2:'First Introductions &amp; Early Weeks',bz3:'Zoonotic Disease &amp; Hygiene',bz4:'Feeding, Sleep &amp; Shared Spaces',bz5:'Supervision as Baby Grows',bz6:'Ongoing Household Management',overallProgress:'Overall Progress',ofWord:'of',z1:'Before Baby Comes Home',z2:'First Introductions &amp; Early Weeks',z3:'Zoonotic Disease Prevention &amp; Hygiene',z4:'Feeding, Sleep &amp; Shared Spaces',z5:'Supervision Rules as Baby Grows',z6:'Ongoing Household Management &amp; Care',zd1:'14 checks: pre-arrival veterinary check-ups and vaccinations, scent familiarisation, gradual desensitisation to nursery routines and baby sounds, maintaining the pet\'s existing routine, a permanent safe retreat space, and briefing the whole household before baby arrives.',zd2:'14 checks: calm, controlled first introductions, reading canine and feline body language and stress signals, giving pets a way to retreat, rewarding calm behaviour, watching for early resource-guarding cues, and protecting one-on-one time with each pet.',zd3:'14 checks: litter box placement and hygiene, toxoplasmosis awareness for pregnant or immunocompromised household members, parasite control, hand hygiene after pet contact, separate food and water bowls, and preventing licking of the baby\'s face and mouth.',zd4:'14 checks: baby gates and physical barriers, feeding-time separation, no unsupervised pet access to the crib or bassinet, nursery boundaries, crate training as a safe space, and safe shared floor time between pet and baby.',zd5:'14 checks: never leaving baby and pet alone together, constant supervision once baby is mobile, preventing tail and ear pulling, recognising resource guarding, teaching gentle touch, and honouring a pet\'s need for a break.',zd6:'14 checks: grooming and veterinary care schedules, watching for behaviour changes, multi-pet household dynamics, emergency and evacuation planning that includes pets, choosing a trusted pet sitter, and keeping the whole household\'s rules consistent.',critical:'Critical',high:'High',medium:'Medium',low:'Low',legendCritical:'Critical = immediate action',legendHigh:'High = urgent attention',noResults:'No checks match your search. Try different keywords.',searchPh:'Search checks… e.g. resource guarding, litter box, toxoplasmosis, baby gate, scent introduction, crate training, tail pulling…',who:'Who',what:'What',where:'Where',why:'Why',how:'How',standards:'Standards &amp; Measurements',example:'Real-World Example',quickTip:'Quick Win',markAll:'Mark All Complete',unmarkAll:'Unmark All',expandAll:'Expand All',collapseAll:'Collapse All',celebrate:'All 84 checks complete — your household is set up for a safe, happy life together for your baby and your pets. Print your checklist as a keepsake.',collTitle:'The SafeLife Collection',collSub:'One safety system for every stage of life. Every module below is a complete, standalone 84-check system — available separately, or as the full bundle.',owned:'✓ Current Module',addon:'Available Separately',disclaimer:'This checklist is educational general safety guidance for welcoming a baby into a home with pets. Pregnant household members and anyone who is immunocompromised should discuss toxoplasmosis and other zoonotic disease risk specifically with their own healthcare provider. For pet behaviour concerns, consult your veterinarian or a qualified animal behaviourist for advice specific to your household.',manualTitle:'User Manual',cheatTitle:'Emergency Cheat Sheet',printTitle:'Print or Save as PDF',printHint:'Choose what to print. To save as a PDF instead of printing on paper, choose "Save as PDF" as the printer in the print dialog.',printZone:'Current zone only',printCheat2:'Cheat sheet',printAll:'Full checklist (all 84)',printCheat:'🖨️ Print cheat sheet',langNote:'Safety check content is written in English (verified international guidance). Interface labels switch language.',saved:'Progress saved',loaded:'Progress loaded',cheatContacts:'My emergency contacts',cheatHint:'Make it yours: edit any name or number, add or delete rows. Everything saves automatically on this device and prints on your cheat sheet.',addContact:'+ Add contact',myNotes:'My notes',notesPh:'Vet contact details, pediatrician details, animal behaviourist notes, pet medical history, microchip number, evacuation plan details…',rules:'The 10 golden rules',keyNums:'Key measurements at a glance',delRow:'Remove',notCovered:'Topic not covered in this module? Check the cheat sheet, ask your veterinarian or health professional, or request it via your SafeLife store page — new checks arrive in free updates.',printNote:'All checks are automatically expanded to full detail when printing — no need to open them first.',mn1:'Newborn',mn2:'Infant',mn3:'Toddler',mn4:'Preschooler',mn5:'School-Age',mn6:'Teenager',mn7:'Young Adult',mn8:'Adult',mn9:'Middle-Aged Adult',mn10:'Active Seniors',mn11:'Advanced Age',mn12:'90+ and Longevity',
+manualBody:'<h4>🚀 Getting started</h4><p>84 checks in 6 zones. Tap any check to see Who / What / Where / Why / How, exact measurements and standards, a real-world example and a quick-win tip.</p><h4>✅ Progress</h4><p>Tick the box to complete a check — bars and counters update instantly. Each zone has Mark All / Unmark All and Expand / Collapse All buttons, and the floating ↑ ↓ arrows jump between checks.</p><h4>🔍 Search &amp; filters</h4><p>The search box filters all 84 checks live across every zone. Tap a risk pill (Critical / High / Medium / Low) to filter by risk level; tap again to clear.</p><h4>🎨 Personalise</h4><p>Pick a colour theme and light or dark mode — remembered on this device. Make the cheat sheet yours: add your own emergency numbers and notes.</p><h4>🐾 A note on pets and babies</h4><p>Pets are a wonderful part of family life, and the overwhelming majority of pet-baby households thrive together. This checklist is about building good habits and supervision routines from the start — not about fearing your animals. If your pregnant or immunocompromised household member has questions about toxoplasmosis or other zoonotic disease risk, that is worth a specific conversation with their own healthcare provider, alongside this general guidance.</p><h4>💾 Save &amp; 🖨️ Print</h4><p>Progress saves automatically on this device as you go. To move your progress to another device or keep a backup, tap 💾 Save — this downloads a small file. On the new device (or after clearing your browser), open the same checklist, tap 📂 Load, and choose that file to restore your progress exactly where you left off. Keep the file somewhere safe, like your email or a notes app. Print the full checklist, one zone, or your personalised cheat sheet — all checks expand automatically when printing. Choose "Save as PDF" in the print dialog to create a PDF.</p>'}
+};
+
+// ═══════════════════════════════════════════
+// TRADEMARK ICON SET — same outline family as the whole collection
+// ═══════════════════════════════════════════
+const _svg = inner => '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" xmlns="http://www.w3.org/2000/svg">' + inner + '</svg>';
+const ICONS = {
+  stage: _svg('<path d="M2.3 8.6c1.7-2.7 4.2-4.1 6.2-4.1s4.5 1.4 6.2 4.1c-1.7 2.7-4.2 4.1-6.2 4.1S4 11.3 2.3 8.6z"/><circle cx="8.5" cy="8.6" r="1.8"/><path d="M14.5 14.6q1.8 1.8 0 3.8M16.7 12.4q3.6 3.6 0 8.2M18.9 10.2q5.4 5.4 0 12.6"/><circle cx="13" cy="16.6" r="1" fill="currentColor" stroke="none"/>'),
+  z1: _svg('<path d="M4 12.5l8-7 8 7"/><path d="M6 11v8a1 1 0 0 0 1 1h10a1 1 0 0 0 1-1v-8"/><circle cx="12" cy="16.6" r="1.3"/><circle cx="9.6" cy="14.6" r="1"/><circle cx="14.4" cy="14.6" r="1"/><circle cx="10.6" cy="18.6" r="0.9"/><circle cx="13.4" cy="18.6" r="0.9"/>'),
+  z2: _svg('<path d="M8.4 6.6c-1.8-1.7-4.4-1.7-5.8.3-1.3 1.9-.8 4.4 1.1 6.1L8.4 17l4.7-4c1.9-1.7 2.4-4.2 1.1-6.1-1.4-2-4-2-5.8-.3z"/><path d="M15 11.5c1.4-1.3 3.4-1.3 4.5.2 1 1.5.6 3.4-.9 4.7L15 20l-3.6-3.6"/>'),
+  z3: _svg('<path d="M12 3.4l7 2.6v5.6c0 4.6-3 7.9-7 9-4-1.1-7-4.4-7-9V6z"/><circle cx="12" cy="12.6" r="2.6"/><circle cx="8.6" cy="9.6" r="1.1"/><circle cx="10.6" cy="7.8" r="1.1"/><circle cx="13.4" cy="7.8" r="1.1"/><circle cx="15.4" cy="9.6" r="1.1"/>'),
+  z4: _svg('<rect x="4" y="6" width="16" height="13" rx="2"/><path d="M8 6v13M12 6v13M16 6v13"/><circle cx="12" cy="4" r="1.4"/>'),
+  z5: _svg('<path d="M2.5 12.5c2.2-4 5.8-6.2 9.5-6.2s7.3 2.2 9.5 6.2c-2.2 4-5.8 6.2-9.5 6.2s-7.3-2.2-9.5-6.2z"/><circle cx="12" cy="12.5" r="2.6"/><circle cx="10.6" cy="10.8" r="0.6" fill="currentColor" stroke="none"/><circle cx="13.4" cy="10.8" r="0.6" fill="currentColor" stroke="none"/>'),
+  z6: _svg('<rect x="4" y="5" width="16" height="15" rx="2"/><path d="M4 9.5h16M8 3v4M16 3v4"/><circle cx="12" cy="15" r="2.4"/><circle cx="9.8" cy="12.6" r="0.9"/><circle cx="14.2" cy="12.6" r="0.9"/>'),
+  stages: [
+    _svg('<circle cx="12" cy="13" r="6.5"/><path d="M12 6.5c0-1.8.8-2.7 2.3-3"/><circle cx="9.7" cy="12.2" r="0.65" fill="currentColor" stroke="none"/><circle cx="14.3" cy="12.2" r="0.65" fill="currentColor" stroke="none"/><path d="M9.9 15c1.4 1.2 2.8 1.2 4.2 0"/>'),
+    _svg('<circle cx="12" cy="7" r="3.2"/><path d="M6.8 20.5v-3.2a5.2 5.2 0 0 1 10.4 0v3.2"/>'),
+    _svg('<path d="M12 3.5l2.5 5.2 5.7.8-4.1 4 1 5.7-5.1-2.7-5.1 2.7 1-5.7-4.1-4 5.7-.8z"/>'),
+    _svg('<rect x="6.5" y="8" width="11" height="12" rx="3"/><path d="M9.5 8V6.2a2.5 2.5 0 0 1 5 0V8"/><rect x="9.7" y="13" width="4.6" height="4" rx="1"/><path d="M6.5 11.5h11"/>'),
+    _svg('<path d="M5 15v-1.5a7 7 0 0 1 14 0V15"/><rect x="4" y="14" width="3.4" height="6" rx="1.6"/><rect x="16.6" y="14" width="3.4" height="6" rx="1.6"/>'),
+    _svg('<path d="M12 4.5L2.8 9l9.2 4.5L21.2 9z"/><path d="M6.8 11.5v3.8c0 1.6 10.4 1.6 10.4 0v-3.8"/><path d="M21.2 9v5"/>'),
+    _svg('<rect x="3.8" y="8" width="16.4" height="11.2" rx="2"/><path d="M9.5 8V6.6A1.6 1.6 0 0 1 11.1 5h1.8a1.6 1.6 0 0 1 1.6 1.6V8M3.8 12.8h16.4"/>'),
+    _svg('<path d="M8.5 9.5v-4c2.3 1.8 4.7 1.8 7 0v4a3.5 3.5 0 0 1-7 0z"/><path d="M12 13v8M12 18c-1.8-.4-3-1.4-3.6-3"/>'),
+    _svg('<circle cx="8.5" cy="5" r="2.1"/><path d="M8.5 7.1c-1.2.4-2 1.5-2 2.8v1.8"/><path d="M8.7 9.6c3.4 0 5.8 2.5 5.8 5.7 0 2.2-1.2 3.9-3 4.9"/><path d="M6.5 11.7v3.4c0 2.2 1 3.9 2.7 5"/>'),
+    _svg('<circle cx="12" cy="5.8" r="2.3"/><path d="M8.2 17.3a3.8 3.8 0 0 1 7.6 0v1.2"/><path d="M6.6 20.5h10.8"/><path d="M8.6 20.5v-3.2M15.4 20.5v-3.2"/><path d="M12 13.4c-.9-.8-1.5-1.3-1.5-1.9a.85.85 0 0 1 1.5-.55.85.85 0 0 1 1.5.55c0 .6-.6 1.1-1.5 1.9z"/>'),
+    _svg('<circle cx="7" cy="5.3" r="2.2"/><path d="M4 19v-3.4a3.4 3.4 0 0 1 3.4-3.4h.6a3.4 3.4 0 0 1 2.6 1.2l1 1.2"/><circle cx="17" cy="9.4" r="1.7"/><path d="M13.9 19v-2.4a2.6 2.6 0 0 1 2.6-2.6h1a2.6 2.6 0 0 1 2.6 2.6V19"/><path d="M9.5 15.3l2.7 1.4"/>'),
+    _svg('<path d="M6.4 8.1c-2.2 0-4 1.8-4 3.9s1.8 3.9 4 3.9c3.4 0 5.2-2.5 5.7-3.9.5-1.4 2.3-3.9 5.7-3.9 2.2 0 4 1.8 4 3.9s-1.8 3.9-4 3.9c-3.4 0-5.2-2.5-5.7-3.9-.5-1.4-2.3-3.9-5.6-3.9z"/>'),
+    _svg('<path d="M8.5 8.2V6.6a3.5 3.5 0 0 1 7 0v1.6"/><rect x="4.3" y="8.2" width="15.4" height="11.8" rx="3.6"/><path d="M4.3 13.2h15.4"/><rect x="10.4" y="10.6" width="3.2" height="2" rx="0.5"/>'),
+    _svg('<circle cx="7.8" cy="12" r="5.3"/><circle cx="16.2" cy="12" r="5.3"/><circle cx="6.3" cy="11.2" r="0.6" fill="currentColor" stroke="none"/><circle cx="9.3" cy="11.2" r="0.6" fill="currentColor" stroke="none"/><circle cx="14.7" cy="11.2" r="0.6" fill="currentColor" stroke="none"/><circle cx="17.7" cy="11.2" r="0.6" fill="currentColor" stroke="none"/><path d="M6.5 13.8c.9.7 1.8.7 2.7 0M14.9 13.8c.9.7 1.8.7 2.7 0"/>'),
+    _svg('<rect x="6" y="4.6" width="12" height="16.4" rx="2.2"/><path d="M9.4 4.6V3.7A1.7 1.7 0 0 1 11.1 2h1.8a1.7 1.7 0 0 1 1.7 1.7v.9"/><path d="M9 13.2l2.2 2.2L15.5 11"/>'),
+    _svg('<path d="M4 11.5l8-6.8 8 6.8"/><path d="M6.2 10.2V19a1 1 0 0 0 1 1h9.6a1 1 0 0 0 1-1v-8.8"/><path d="M9.4 19v-4.6h5.2V19"/><path d="M9 13l2.2 1.6 3.4-3"/>'),
+    _svg('<path d="M12 3v18"/><path d="M8 5h8"/><path d="M9.6 13h4.8"/>'),
+    _svg('<rect x="5" y="9.6" width="14" height="4.8" rx="2.4" transform="rotate(-38 12 12)"/><path d="M12 9.6v4.8" transform="rotate(-38 12 12)"/>'),
+    _svg('<circle cx="8.3" cy="15.5" r="5.1"/><circle cx="8.3" cy="15.5" r="0.9" fill="currentColor" stroke="none"/><path d="M8.3 15.5h7l2.7 3.6"/><path d="M8.3 10.6h4.8l1.7 4.9h3.5"/><circle cx="7.6" cy="5.6" r="1.7"/><path d="M7.6 7.3v2.2"/><circle cx="18.7" cy="19.3" r="1.3"/>'),
+    _svg('<path d="M2.3 8.6c1.7-2.7 4.2-4.1 6.2-4.1s4.5 1.4 6.2 4.1c-1.7 2.7-4.2 4.1-6.2 4.1S4 11.3 2.3 8.6z"/><circle cx="8.5" cy="8.6" r="1.8"/><path d="M14.5 14.6q1.8 1.8 0 3.8M16.7 12.4q3.6 3.6 0 8.2M18.9 10.2q5.4 5.4 0 12.6"/><circle cx="13" cy="16.6" r="1" fill="currentColor" stroke="none"/>'),
+    _svg('<path d="M12 19.4c-2.7-1.9-4.7-3.5-4.7-5.5a2.6 2.6 0 0 1 4.7-1.6 2.6 2.6 0 0 1 4.7 1.6c0 2-2 3.6-4.7 5.5z"/><circle cx="7.4" cy="8.2" r="1.6"/><circle cx="10.3" cy="5.6" r="1.6"/><circle cx="13.7" cy="5.6" r="1.6"/><circle cx="16.6" cy="8.2" r="1.6"/>')
+  ]
+};
+function injectIcons(){
+  document.getElementById('logo-icon').innerHTML = ICONS.stage;
+  document.getElementById('hero-icon').innerHTML = ICONS.stage;
+  document.querySelectorAll('.zic[data-zi]').forEach(el=>{ el.innerHTML = ICONS[el.dataset.zi] || ''; });
+}
+// ═══════════════════════════════════════════
+// ALL 84 CHECKS — NEW PET + BABY HOUSEHOLD
+// ═══════════════════════════════════════════
+const ZONES = [
+  {
+    id: 1, name: 'Before Baby Comes Home', icon: '🏠',
+    desc: '14 checks: pre-arrival veterinary check-ups and vaccinations, scent familiarisation, gradual desensitisation to nursery routines and baby sounds, maintaining the pet\'s existing routine, a permanent safe retreat space, and briefing the whole household before baby arrives.',
+    checks: [
+      { id:'pb01', num:'PB01', risk:'high', title:'Pre-Arrival Veterinary Check-Up for Every Household Pet',
+        who:'All dogs, cats and other household pets, and the parents-to-be planning ahead',
+        what:'A full veterinary check-up scheduled well before the due date, rather than assumed to be unnecessary because the pet "seems fine"',
+        where:'At the pet\'s usual veterinary practice',
+        why:'A check-up before baby arrives confirms the pet is healthy, up to date on preventive care, and free of any condition that could affect its temperament or its safety around a newborn',
+        how:'Book a general wellness check-up in good time before the due date, and mention to the veterinarian that a baby is expected so they can flag anything relevant',
+        measurement:'AVMA guidance on pet wellness care recommends a general veterinary check-up at least annually, with an additional visit timed ahead of a major household change such as a new baby.',
+        example:'A family books their dog\'s annual check-up a couple of months before their due date instead of waiting for the usual renewal date, giving time to address anything the vet finds.',
+        tip:'Ask the veterinarian directly for their specific advice on introducing a baby to your particular pet — breed, age and temperament all matter.' },
+
+      { id:'pb02', num:'PB02', risk:'high', title:'Vaccinations and Parasite Prevention Brought Fully Up to Date',
+        who:'All household pets',
+        what:'Vaccination records and parasite prevention (deworming, flea and tick control) that are overdue or unclear',
+        where:'Tracked via veterinary records at home and confirmed with the veterinary practice',
+        why:'Keeping pets current on vaccinations and parasite prevention reduces the risk of disease transmission to a newborn with an immature immune system',
+        how:'Review vaccination and parasite-prevention records with the veterinarian, catch up anything overdue, and set reminders for future doses well before the due date',
+        measurement:'AVMA and public health guidance on zoonotic disease prevention identifies up-to-date vaccination and parasite control as a core preventive measure in households expecting a baby.',
+        example:'A cat\'s deworming schedule is found to be several months overdue during a pre-arrival check-up and is brought current well ahead of the baby\'s arrival.',
+        tip:'Keep a simple written or digital record of vaccination and parasite-prevention dates so nothing is left to memory during a busy final trimester.' },
+
+      { id:'pb03', num:'PB03', risk:'medium', title:'Scent Familiarisation Before Baby Arrives',
+        who:'Household pets, particularly dogs and cats with a strong reliance on scent',
+        what:'Baby\'s scent introduced only at the moment of first meeting, with no prior familiarisation',
+        where:'Throughout the home, especially areas the pet already associates with the family',
+        why:'Pets rely heavily on scent to build familiarity, and introducing baby\'s scent gradually beforehand can make the actual first meeting calmer and less novel',
+        how:'Bring home a blanket or worn item with the baby\'s scent from the hospital or birthing location ahead of the baby\'s own arrival, and let the pet investigate it calmly in a low-pressure setting',
+        measurement:'Recognised veterinary behaviour guidance recommends scent pre-exposure as a simple, low-cost step to ease a pet\'s adjustment to a new household member.',
+        example:'A hospital-sent blanket carrying the newborn\'s scent is placed near the dog\'s bed a day before mother and baby come home, and the dog is calm and unbothered by the actual introduction.',
+        tip:'Let the pet approach and sniff the item at its own pace rather than holding it up to their nose — a relaxed, self-directed sniff builds more genuine familiarity.' },
+
+      { id:'pb04', num:'PB04', risk:'medium', title:'Gradual Desensitisation to Nursery-Adjacent Behaviour',
+        who:'Household pets that will share space near the nursery',
+        what:'A pet suddenly excluded from a previously accessible room only once the baby arrives, with no prior adjustment period',
+        where:'The nursery and its immediate surrounding hallway or doorway',
+        why:'A sudden, unexplained change in access is more likely to cause frustration or anxiety than a change introduced gradually over time',
+        how:'Begin restricting or adjusting the pet\'s access to the nursery weeks before the due date, pairing the new boundary with something positive like a treat or a favourite toy',
+        measurement:'Recognised veterinary behaviour guidance recommends introducing household changes gradually, well ahead of the actual event, to reduce a pet\'s stress response.',
+        example:'A cat that used to nap on the future nursery windowsill is gradually redirected to a new sunny spot in another room over several weeks before the room is set up as a nursery.',
+        tip:'Pair every new boundary with something the pet enjoys, so the new rule becomes associated with something positive rather than only a loss of access.' },
+
+      { id:'pb05', num:'PB05', risk:'medium', title:'Maintaining the Pet\'s Existing Routine During Preparation',
+        who:'All household pets',
+        what:'Feeding times, walks, play and attention that quietly start slipping during the busy preparation period before baby arrives',
+        where:'Throughout the home and the pet\'s daily routine',
+        why:'A stable routine is one of the most reliable ways to support a pet\'s sense of security through a period of household change, and change fatigue before baby even arrives can make the eventual introduction harder',
+        how:'Consciously protect the pet\'s core routine — feeding times, walks, and dedicated attention — through the weeks of nursery preparation, rather than letting it erode gradually',
+        measurement:'Recognised veterinary behaviour guidance identifies routine stability as a key protective factor for pets during periods of household change.',
+        example:'A family keeps their dog\'s morning walk at the same time throughout the final weeks of preparation, even while nursery set-up takes up much of their spare time and energy.',
+        tip:'If a routine change is unavoidable, make it gradually and well before baby arrives, rather than all at once in the same week as the birth.' },
+
+      { id:'pb06', num:'PB06', risk:'high', title:'Addressing Existing Behavioural Concerns With a Professional Before Baby Arrives',
+        who:'Any pet with an existing behaviour concern such as reactivity, resource guarding, or anxiety',
+        what:'Known behaviour issues left unaddressed on the assumption they will resolve on their own once the baby arrives',
+        where:'Applies to the whole home and the pet\'s established behaviour patterns',
+        why:'Existing behaviour concerns are more likely to intensify under the stress of household change than to resolve by themselves, and addressing them early gives far more options than waiting',
+        how:'Work with a veterinarian or a qualified animal behaviourist well before the due date to assess and begin addressing any known behaviour concern',
+        measurement:'AVMA guidance on pet behaviour recommends professional assessment of any existing behaviour concern before a major household change, rather than waiting to see how the pet responds.',
+        example:'A dog with a history of guarding food is worked with by a qualified behaviourist for several weeks before the baby arrives, well ahead of any risk of the behaviour appearing around a crawling baby later.',
+        tip:'Start this process as early in the pregnancy as possible — meaningful behaviour work takes time and is far easier without the time pressure of an approaching due date.' },
+
+      { id:'pb07', num:'PB07', risk:'high', title:'A Permanent Safe Retreat Space Set Up for Each Pet',
+        who:'All household pets',
+        what:'No dedicated, reliably quiet space the pet can retreat to when they want to be away from noise or activity',
+        where:'A calm room or corner of the home, away from the busiest baby-care areas',
+        why:'Every pet needs a genuinely safe place to decompress, and this becomes especially important once a home includes a crying newborn and more frequent visitors',
+        how:'Set up a permanent retreat space with the pet\'s bed, water, and familiar items, in a location the whole household commits to leaving undisturbed when the pet chooses to use it',
+        measurement:'Recognised veterinary behaviour guidance identifies a reliable, undisturbed retreat space as a foundational element of a safe multi-species household.',
+        example:'A spare room is fitted out as a cat\'s retreat space with its bed, scratching post and litter box, and the whole family agrees never to follow the cat in there uninvited.',
+        tip:'Set this space up and let the pet get comfortable using it weeks before the baby arrives, not on the day itself.' },
+
+      { id:'pb08', num:'PB08', risk:'high', title:'Physical Barriers and Baby Gates Installed Before Arrival, Not After',
+        who:'All household pets and the baby',
+        what:'Baby gates and physical barriers purchased or installed only after the baby is already home',
+        where:'Nursery doorway, stairs, and any other key transition points in the home',
+        why:'Installing barriers in advance lets the pet get used to them calmly, rather than experiencing a new, confusing obstacle at the same time as a brand new family member',
+        how:'Install baby gates and any other physical barriers several weeks before the due date, and let the pet explore and adjust to them during a calm period',
+        measurement:'Recognised guidance for introducing pets to a new baby recommends installing physical barriers well ahead of the birth so the pet has time to adapt.',
+        example:'A baby gate fitted at the nursery doorway a month before the due date becomes a familiar part of the house layout long before it needs to do its actual job.',
+        tip:'Practise opening and closing the gate calmly in front of the pet a few times so the sound and movement become familiar rather than startling.' },
+
+      { id:'pb09', num:'PB09', risk:'medium', title:'Desensitising Pets to Baby Sounds and Equipment',
+        who:'All household pets, particularly those with noise sensitivity',
+        what:'A pet\'s first exposure to baby crying, swings, monitors or other equipment sounds happening only after the baby is already home',
+        where:'Throughout the home',
+        why:'Sudden, unfamiliar sounds can startle a pet, and a startled response near a newborn carries more risk than the same response in an empty room',
+        how:'Play recordings of baby crying and other common baby sounds at a low volume in the weeks before the due date, gradually increasing volume while pairing the sound with something positive',
+        measurement:'Recognised veterinary behaviour guidance recommends gradual, positive sound desensitisation as a standard preparation step for noise-sensitive pets before a major household change.',
+        example:'A dog that startles easily is gradually introduced to recordings of newborn crying at a low volume during calm evenings, well before the baby\'s actual arrival.',
+        tip:'Stop and lower the volume if the pet shows any sign of stress — desensitisation only works when the pet stays under their stress threshold throughout.' },
+
+      { id:'pb10', num:'PB10', risk:'medium', title:'An Interim Pet Care Plan for the Birth or Hospital Stay',
+        who:'All household pets',
+        what:'No plan for who will feed, walk and care for pets during the birth itself or any hospital stay',
+        where:'Applies to the home while the parents are away',
+        why:'A clear, arranged plan avoids last-minute scrambling and ensures pets are not left without care during an unpredictable and often busy time',
+        how:'Arrange in advance for a trusted family member, friend, or professional pet sitter to care for pets during the birth and any hospital stay, and share clear instructions with them ahead of time',
+        measurement:'Recognised household-planning guidance for expectant families recommends arranging interim pet care well before the due date, since labour timing cannot be predicted precisely.',
+        example:'A neighbour is given a spare key and a written care sheet for the family dog weeks before the due date, so there is no scramble to arrange care once labour begins.',
+        tip:'Write the care instructions down, even for someone familiar with the pet — reduces the chance of a missed detail during an unusually busy time.' },
+
+      { id:'pb11', num:'PB11', risk:'low', title:'Nail Trimming and Grooming Kept Current Before Arrival',
+        who:'All household pets',
+        what:'Overgrown nails or an ungroomed coat that increase the risk of accidental scratches during normal handling near the baby',
+        where:'Wherever the pet is groomed at home or professionally',
+        why:'Well-trimmed nails and a well-maintained coat reduce the chance of an accidental scratch during ordinary affectionate contact, such as a pet resting near or being petted close to the baby',
+        how:'Establish or catch up on a regular nail-trimming and grooming schedule before the baby arrives, using a professional groomer if the pet is not comfortable with trimming at home',
+        measurement:'Recognised veterinary guidance recommends regular nail trimming, generally every few weeks depending on the individual pet, as routine preventive care.',
+        example:'A cat\'s nails, previously trimmed only occasionally, are put on a regular several-week trimming schedule in the run-up to the baby\'s arrival.',
+        tip:'If a pet resists nail trims, start short, positive practice sessions well before baby arrives rather than attempting a full trim under time pressure later.' },
+
+      { id:'pb12', num:'PB12', risk:'medium', title:'Decluttering and Pet-Proofing the Nursery',
+        who:'The whole household, preparing the nursery space',
+        what:'Small objects, cords, or chewable items left within a pet\'s reach in or near the nursery',
+        where:'The nursery and any room pets have regular access to',
+        why:'A nursery set up without pet-proofing in mind can create hazards for both the pet, who might chew or swallow something unsuitable, and the baby, whose items could be damaged or contaminated',
+        how:'Walk through the nursery from the pet\'s-eye view, securing cords, small items, and anything chewable well out of reach before it becomes a regular part of the room',
+        measurement:'Recognised household-safety guidance for multi-species homes recommends reviewing new rooms specifically for pet-related hazards before they come into regular use.',
+        example:'A box of small nursery decorations is moved to a high shelf after the family dog is found sniffing curiously at it during the room\'s set-up.',
+        tip:'Do the pet-proofing walk-through at the pet\'s actual height and reach, not standing height — it reveals hazards easy to otherwise miss.' },
+
+      { id:'pb13', num:'PB13', risk:'low', title:'Keeping Exercise and Play Going During Preparation',
+        who:'All household pets, especially dogs needing regular physical activity',
+        what:'Exercise and play sessions that quietly shrink as attention shifts toward nursery preparation',
+        where:'Wherever the pet is normally walked or played with',
+        why:'A well-exercised pet is generally calmer and better able to cope with change, and maintaining this before baby arrives sets a healthier baseline for the adjustment period ahead',
+        how:'Keep walks and play sessions to their usual length and frequency through the preparation period, enlisting help from friends or family if time becomes tight',
+        measurement:'Recognised veterinary behaviour guidance links adequate physical activity to lower stress reactivity in pets facing household change.',
+        example:'A family arranges a dog-walking friend to help twice a week during the final weeks of pregnancy, so their dog\'s exercise routine does not lapse during a busy period.',
+        tip:'If exercise time is genuinely limited, prioritise consistency of a shorter session over an inconsistent long one — pets respond well to predictability.' },
+
+      { id:'pb14', num:'PB14', risk:'medium', title:'Briefing Family, Caregivers and Visitors on the Introduction Plan',
+        who:'All household members, extended family and any regular visitors',
+        what:'A carefully thought-out introduction and supervision plan that only the parents know about, with visitors unaware of the household\'s expectations',
+        where:'Applies to every person who will be present around the pet and baby in the early weeks',
+        why:'A plan is only effective if everyone who might be present follows it — a well-meaning grandparent or visitor unaware of the rules can undermine careful preparation in a moment',
+        how:'Before the baby arrives, briefly explain the introduction and supervision plan to every regular visitor and caregiver, including specific rules such as not approaching the pet\'s retreat space',
+        measurement:'Recognised guidance for introducing pets to a new baby identifies consistent household-wide rule-following, including from visitors, as essential to a plan\'s success.',
+        example:'Grandparents are given a short, friendly explanation of the family\'s pet-introduction plan before their first visit, including the rule that the dog\'s bed area is off-limits.',
+        tip:'A short, warm explanation works far better than a long list of rules — most visitors are glad to help once they understand the reasoning.' }
+    ]
+  },
+  {
+    id: 2, name: 'First Introductions & Early Weeks', icon: '🐕',
+    desc: '14 checks: calm, controlled first introductions, reading canine and feline body language and stress signals, giving pets a way to retreat, rewarding calm behaviour, watching for early resource-guarding cues, and protecting one-on-one time with each pet.',
+    checks: [
+      { id:'pb15', num:'PB15', risk:'high', title:'The First Introduction Done Calm, Controlled and On-Leash',
+        who:'Dogs meeting the baby for the first time, and the adults managing the introduction',
+        what:'A first meeting that happens amid excitement, noise, or without any physical control over the dog',
+        where:'A calm, familiar room in the home, not the doorway or entrance during a busy homecoming',
+        why:'A controlled, low-arousal first introduction sets the tone for the relationship and reduces the chance of an overexcited or startled reaction in the first, most novel moment',
+        how:'Let someone other than the parent carrying the baby greet and settle the dog first, then bring the dog in on a leash for a calm, brief first look at the baby from a comfortable distance',
+        measurement:'Recognised veterinary behaviour guidance for introducing a dog to a new baby recommends a calm, leashed, low-arousal first meeting rather than an unstructured greeting at the door.',
+        example:'A family has a friend greet and settle their excited dog in the yard first, then bring the calmer dog inside on a leash for a brief, quiet first look at the new baby.',
+        tip:'If the dog seems over-aroused even before seeing the baby, wait and try again once they have settled rather than pushing ahead with the introduction.' },
+
+      { id:'pb16', num:'PB16', risk:'high', title:'Reading Canine Body Language and Stress Signals',
+        who:'All household members, especially anyone spending time around a dog and baby together',
+        what:'Early stress signals in a dog — lip licking, yawning, turning the head away, "whale eye" (whites of the eyes showing), stiffening — going unnoticed or misread as calm behaviour',
+        where:'Any situation where the dog and baby are together',
+        why:'Dogs almost always signal discomfort well before any more serious reaction, and recognising these early signals is the single most effective way to prevent an incident',
+        how:'Learn the common canine stress signals from a veterinarian or qualified behaviourist, and treat any of these signals as an immediate cue to calmly increase distance between dog and baby',
+        measurement:'AVMA and recognised veterinary behaviour guidance identify lip licking, yawning, whale eye, stiffening and turning away as reliable early canine stress signals that should never be ignored.',
+        example:'A parent notices their dog showing whale eye while the baby reaches toward it and calmly redirects the dog to another room before anything escalates.',
+        tip:'Keep a printed or saved reference image of common stress signals somewhere visible until reading them becomes second nature.' },
+
+      { id:'pb17', num:'PB17', risk:'high', title:'Reading Feline Body Language and Stress Signals',
+        who:'All household members, especially anyone spending time around a cat and baby together',
+        what:'Early stress signals in a cat — flattened ears, tail flicking or thumping, dilated pupils, a low crouch — going unnoticed',
+        where:'Any situation where the cat and baby are together',
+        why:'Like dogs, cats reliably signal discomfort before reacting more strongly, and recognising these signals allows a calm intervention well before any risk of a scratch or bite',
+        how:'Learn the common feline stress signals from a veterinarian or qualified behaviourist, and treat any of these signals as a cue to give the cat space and reduce the pressure of the interaction',
+        measurement:'AVMA and recognised veterinary behaviour guidance identify flattened ears, tail flicking, dilated pupils and a low crouch as reliable early feline stress signals.',
+        example:'A parent notices their cat\'s tail flicking rapidly while a toddler approaches and gently redirects the toddler\'s attention elsewhere before the cat feels cornered.',
+        tip:'A cat that stops, freezes, or stares fixedly is often already at its limit — this is a signal to act, not to wait and see.' },
+
+      { id:'pb18', num:'PB18', risk:'critical', title:'Never Forcing Direct Nose-to-Face Contact With the Newborn',
+        who:'All household members and visitors around a newborn and a pet',
+        what:'Deliberately holding a pet\'s face close to the baby\'s face, or the reverse, to encourage "bonding" or get a photo',
+        where:'Any situation where a pet and newborn are physically close',
+        why:'A newborn\'s face is uniquely vulnerable, and forcing close facial contact — even with a calm, trusted pet — removes the pet\'s ability to choose distance if something startles them, carrying a genuinely serious injury risk',
+        how:'Never lift, hold, or position a pet\'s face directly against the baby\'s face under any circumstances, no matter how gentle or familiar the pet is, and firmly redirect any visitor who attempts this',
+        measurement:'AVMA and recognised paediatric safety guidance identify forced close facial contact between pets and infants as a preventable and serious risk factor for facial injury, regardless of the pet\'s prior temperament.',
+        example:'A visiting relative tries to hold the family cat up to the newborn\'s face for a photo and is calmly but firmly asked not to, with a supervised distant photo taken instead.',
+        tip:'Plan photos that show closeness without physical face-to-face contact — a pet resting calmly nearby, supervised, tells the same warm story far more safely.' },
+
+      { id:'pb19', num:'PB19', risk:'medium', title:'Keeping Early Introductions Brief and Positive',
+        who:'Household pets and the baby, especially in the first days and weeks',
+        what:'Introduction sessions allowed to run long in the excitement of having everyone together',
+        where:'Anywhere pet and baby are brought together in the early days',
+        why:'Short, positive sessions are easier for a pet to process calmly than a long session where fatigue or overstimulation can build gradually and unnoticed',
+        how:'Keep early supervised sessions brief — a few calm minutes — and end them on a positive note before the pet shows any sign of tiring of the interaction',
+        measurement:'Recognised veterinary behaviour guidance recommends short, positive exposure sessions when introducing a pet to a significant household change, gradually lengthened only as the pet remains comfortable.',
+        example:'A family keeps their cat\'s early sessions near the baby to just a few minutes at a time, always ending while the cat is still relaxed rather than waiting for signs of restlessness.',
+        tip:'End the session slightly earlier than feels necessary — it is far better to finish while the pet is still comfortable than to push slightly too far.' },
+
+      { id:'pb20', num:'PB20', risk:'medium', title:'Rewarding Calm Behaviour Around the Baby',
+        who:'Household pets, especially in the early weeks of adjustment',
+        what:'Calm, appropriate behaviour around the baby that goes unacknowledged, while only unwanted behaviour receives attention',
+        where:'Any situation where the pet is calm and settled near the baby',
+        why:'Actively rewarding calm behaviour helps a pet form a positive association with the baby\'s presence, reinforcing exactly the response the household wants to see more of',
+        how:'Offer a treat, calm praise, or a favourite toy whenever the pet is relaxed and appropriate around the baby, building a consistent positive association over time',
+        measurement:'Recognised veterinary behaviour guidance recommends positive reinforcement of calm behaviour as a standard, effective technique for building positive pet-baby associations.',
+        example:'A dog that lies down calmly nearby while the baby is fed receives a quiet "good boy" and a small treat, reinforcing that calm presence near the baby is rewarded.',
+        tip:'Keep a small stash of treats within easy reach during baby-care times so rewarding calm behaviour is a quick, natural habit rather than an afterthought.' },
+
+      { id:'pb21', num:'PB21', risk:'high', title:'Always Giving the Pet a Way to Retreat and Observe',
+        who:'All household pets, particularly during structured introductions',
+        what:'A pet positioned or held in a way that prevents it from moving away if it becomes uncomfortable',
+        where:'Any introduction or shared-space situation between pet and baby',
+        why:'An animal that feels trapped or unable to create distance is far more likely to react defensively than one that can simply choose to walk away',
+        how:'Always let the pet approach or retreat at its own pace during introductions, never physically restraining or cornering it near the baby',
+        measurement:'AVMA behaviour guidance identifies the ability to retreat as one of the most important safety factors in any structured animal-child interaction.',
+        example:'A cat that chooses to observe the baby from a nearby chair rather than approaching closely is left to do so, rather than being picked up and brought closer.',
+        tip:'Let curiosity happen on the pet\'s terms — a pet that approaches voluntarily is showing genuine comfort, which is worth far more than a forced closer look.' },
+
+      { id:'pb22', num:'PB22', risk:'medium', title:'Gradually Increasing Supervised Together-Time',
+        who:'Household pets and the baby',
+        what:'Supervised time together increased too quickly, based on how the first few sessions went rather than a deliberate gradual plan',
+        where:'Throughout the home during the early weeks',
+        why:'A gradual increase gives the household ongoing opportunities to confirm the pet remains comfortable at each stage, rather than assuming early success predicts continued comfort',
+        how:'Increase the length and frequency of supervised together-time gradually over the early weeks, continuing to watch for stress signals at every stage rather than assuming things will keep going well',
+        measurement:'Recognised veterinary behaviour guidance recommends a gradual, staged increase in exposure when introducing a pet to a significant household change.',
+        example:'A family extends their dog\'s supervised time in the same room as the baby by a few minutes each week, rather than jumping straight from brief visits to long stretches together.',
+        tip:'If a session goes noticeably better or worse than usual, adjust the pace rather than sticking rigidly to a pre-set schedule.' },
+
+      { id:'pb23', num:'PB23', risk:'medium', title:'Protecting One-on-One Individual Time With Each Pet',
+        who:'Each household pet individually',
+        what:'A pet\'s dedicated one-on-one time and attention that quietly disappears once the baby arrives',
+        where:'Wherever the pet normally receives individual attention, play or affection',
+        why:'A sudden, total loss of individual attention is one of the most common sources of a pet\'s distress after a new baby arrives, and can affect the relationship long after the early weeks',
+        how:'Deliberately protect a period of one-on-one time with each pet every day, even if brief, separate from time spent together with the baby present',
+        measurement:'Recognised veterinary behaviour guidance identifies preserved individual attention as an important protective factor for a pet\'s wellbeing and behaviour after a new baby arrives.',
+        example:'A parent sets aside ten quiet minutes each evening for a dedicated play session with the family dog, protecting it even on the busiest newborn days.',
+        tip:'Enlist a partner, family member or friend to help protect this time during the most demanding early weeks — it does not have to be the same person every day.' },
+
+      { id:'pb24', num:'PB24', risk:'high', title:'Watching for Early Resource-Guarding Cues Around Baby Items',
+        who:'All household pets, particularly around new baby-related objects',
+        what:'Early signs of guarding around baby blankets, toys, or resting spots — stiffening, a hard stare, or a low growl when approached near these items',
+        where:'Anywhere baby items are placed within a pet\'s reach',
+        why:'Resource guarding around new items can develop quietly and, if unnoticed, become a more serious pattern once the baby is mobile and reaching for the same items',
+        how:'Watch closely for any early guarding signal around baby items, and if noticed, remove the specific item from the pet\'s access and consult a veterinarian or behaviourist promptly',
+        measurement:'AVMA and recognised veterinary behaviour guidance identify early resource-guarding cues as a signal requiring prompt professional input, not a wait-and-see approach.',
+        example:'A dog that stiffens over a dropped baby blanket has the blanket removed immediately, and the family consults their veterinarian about the behaviour the same week.',
+        tip:'Never attempt to physically take a guarded item away in the moment — remove access calmly from a distance and address the pattern with a professional afterward.' },
+
+      { id:'pb25', num:'PB25', risk:'medium', title:'Keeping Interactions Short During High-Stress Newborn Periods',
+        who:'Household pets and the baby, during periods of newborn crying or high household stress',
+        what:'Pet-baby interaction continuing as normal during periods when the baby is distressed and crying loudly',
+        where:'Anywhere the baby is crying or the household is under visible stress',
+        why:'A crying, distressed baby can be overstimulating for a pet, and this is exactly the moment when a pet\'s tolerance is lowest and supervision needs are highest',
+        how:'During periods of newborn crying or high stress, calmly separate the pet to its retreat space rather than continuing an interaction, resuming once things have settled',
+        measurement:'Recognised veterinary behaviour guidance recommends reducing pet-infant proximity specifically during high-stress or high-noise periods, when a pet\'s stress threshold is more easily reached.',
+        example:'A family moves their dog to another room during a particularly long bout of newborn crying, rather than keeping the dog in the same room throughout.',
+        tip:'Treat a crying baby as an automatic cue to check in on the pet\'s comfort and proximity, not just the baby\'s needs.' },
+
+      { id:'pb26', num:'PB26', risk:'high', title:'A Separate Safe Zone Available at All Times in the Early Weeks',
+        who:'All household pets',
+        what:'The pet\'s retreat space becoming inconsistently available or forgotten during the busy early weeks',
+        where:'The pet\'s designated retreat space set up before baby arrived',
+        why:'The early weeks are typically the most unpredictable and tiring period for the household, which makes a consistently available retreat space more important than ever, not less',
+        how:'Keep the pet\'s retreat space consistently accessible and undisturbed throughout the early weeks, even amid the general disruption of newborn life',
+        measurement:'Recognised veterinary behaviour guidance identifies consistent access to a safe retreat space as especially important during periods of household disruption such as the newborn period.',
+        example:'Despite general household chaos in the first weeks, the family keeps the cat\'s retreat room door open and undisturbed every single day.',
+        tip:'If visitors are staying over, specifically remind them the retreat space is off-limits — this is often the exact period when it is most needed.' },
+
+      { id:'pb27', num:'PB27', risk:'high', title:'Never Punishing a Pet for Showing Stress Signals',
+        who:'All household members interacting with pets during the adjustment period',
+        what:'Scolding, startling, or punishing a pet for growling, hissing, or otherwise signalling discomfort',
+        where:'Any interaction between pet and household members',
+        why:'A growl or hiss is a warning, not an attack, and punishing it does not remove the underlying discomfort — it only teaches the pet to skip the warning next time, which is far more dangerous',
+        how:'Treat any growl, hiss, or other warning signal as valuable information about the pet\'s comfort level, respond by giving space, and address the underlying cause rather than punishing the signal itself',
+        measurement:'AVMA and recognised veterinary behaviour guidance strongly caution against punishing warning signals such as growling, since this can suppress future warnings without resolving the pet\'s discomfort.',
+        example:'A dog that growls when a toddler gets too close to its food bowl is calmly given space rather than scolded, and the family adjusts feeding routines to prevent the situation recurring.',
+        tip:'A warning growl is the pet doing exactly the right thing — the household\'s job is to listen to it and adjust, not to suppress it.' },
+
+      { id:'pb28', num:'PB28', risk:'low', title:'Logging Pet Behaviour Changes for the Veterinarian',
+        who:'All household pets during the adjustment period',
+        what:'Gradual behaviour changes — appetite, sleep, activity level, or interactions — that go unrecorded and are hard to describe accurately later',
+        where:'Applies to the pet\'s overall behaviour throughout the early weeks',
+        why:'A simple record makes it much easier to notice a genuine pattern of change and to give the veterinarian accurate, specific information if a concern does arise',
+        how:'Keep a brief, ongoing note of any changes in the pet\'s appetite, sleep, energy, or interactions during the adjustment period, even minor ones',
+        measurement:'Recognised veterinary guidance notes that a specific, dated behaviour record is significantly more useful for diagnosis and advice than a general recollection weeks later.',
+        example:'A brief note that the family dog has been eating less than usual for several days prompts an earlier veterinary visit than would have happened if the change had gone unrecorded.',
+        tip:'A simple phone note with a date and a line or two is enough — the goal is a reliable record, not a detailed diary.' }
+    ]
+  },
+  {
+    id: 3, name: 'Zoonotic Disease Prevention & Hygiene', icon: '🧼',
+    desc: '14 checks: litter box placement and hygiene, toxoplasmosis awareness for pregnant or immunocompromised household members, parasite control, hand hygiene after pet contact, separate food and water bowls, and preventing licking of the baby\'s face and mouth.',
+    checks: [
+      { id:'pb29', num:'PB29', risk:'high', title:'Litter Box Placement Away From Food and Baby Areas, With Daily Scooping',
+        who:'Cat-owning households',
+        what:'A litter box placed near food preparation areas, the nursery, or baby\'s play area, or scooped inconsistently',
+        where:'Wherever the litter box is currently located in the home',
+        why:'Litter box hygiene is one of the most direct routes for zoonotic disease transmission, and both placement and cleaning frequency meaningfully reduce that risk',
+        how:'Locate the litter box well away from food preparation and baby areas, scoop it at least once daily, and have someone other than a pregnant household member handle full cleaning where possible',
+        measurement:'CDC guidance on toxoplasmosis prevention recommends daily litter box scooping, since the parasite that causes toxoplasmosis generally becomes infectious only after roughly one to five days.',
+        example:'A litter box previously kept in a laundry room next to the kitchen is relocated to a separate utility space, and daily scooping becomes a fixed household task.',
+        tip:'If daily scooping cannot be guaranteed by someone else, wearing disposable gloves and washing hands thoroughly afterward significantly reduces risk.' },
+
+      { id:'pb30', num:'PB30', risk:'critical', title:'Toxoplasmosis Awareness for Pregnant or Immunocompromised Household Members',
+        who:'Pregnant household members and anyone who is immunocompromised',
+        what:'Litter box cleaning, gardening in soil frequented by cats, and handling raw meat carried out without awareness of toxoplasmosis risk',
+        where:'Wherever litter boxes, outdoor soil, or raw meat are handled in the home',
+        why:'Toxoplasmosis carries a genuine risk of serious harm during pregnancy or for someone with a weakened immune system, and public health guidance treats this as a specific precaution, separate from general pet safety',
+        how:'Where possible, have someone other than a pregnant or immunocompromised household member handle litter box cleaning; if this is not possible, wear disposable gloves, avoid touching the face while cleaning, and wash hands thoroughly afterward — and discuss individual risk directly with a healthcare provider',
+        measurement:'CDC and WHO guidance on toxoplasmosis identifies cat faeces, unwashed produce, and undercooked meat as the primary transmission routes, and recommends this specific precaution for pregnant and immunocompromised individuals.',
+        example:'A pregnant household member hands litter box duties to their partner for the remainder of the pregnancy after reading CDC guidance on toxoplasmosis and confirming the approach with their own doctor.',
+        tip:'This is genuinely worth a specific conversation with a healthcare provider — general household guidance is a helpful starting point, but individual medical advice should always take priority.' },
+
+      { id:'pb31', num:'PB31', risk:'high', title:'A Regular Deworming and Parasite-Control Programme for All Pets',
+        who:'All household pets',
+        what:'Deworming and parasite control treated as occasional rather than following a consistent, ongoing schedule',
+        where:'Applies to every pet in the household',
+        why:'Several intestinal parasites carried by pets can be transmitted to humans, and a consistent prevention programme significantly reduces this risk for the whole household, including a new baby',
+        how:'Follow a veterinarian-recommended deworming and parasite-prevention schedule for every pet in the home, and keep it current rather than letting it lapse',
+        measurement:'AVMA and CDC guidance recommends a year-round, veterinarian-guided parasite-prevention programme as standard preventive care, with specific frequency depending on the pet\'s lifestyle and local risk factors.',
+        example:'A household sets a recurring reminder to renew their dog\'s parasite prevention on schedule, rather than relying on remembering the approximate timing.',
+        tip:'Ask the veterinarian specifically whether the household\'s parasite-prevention plan is appropriate now that a baby is in the home — recommendations can shift with household composition.' },
+
+      { id:'pb32', num:'PB32', risk:'high', title:'Hand Hygiene After Any Pet Contact and Before Touching Baby',
+        who:'All household members and visitors',
+        what:'Handling a pet and then touching the baby, bottles, or baby items without washing hands in between',
+        where:'Throughout the home, especially transitions between pet contact and baby care',
+        why:'Hand hygiene is one of the simplest and most effective ways to reduce the transmission of bacteria and parasites from pet contact to a newborn with an immature immune system',
+        how:'Build a consistent habit of washing hands with soap and water after any pet contact, and always before handling the baby, bottles, or feeding equipment',
+        measurement:'CDC and WHO hand hygiene guidance recommends washing hands with soap and water for at least 20 seconds after animal contact and before contact with an infant.',
+        example:'A household places a reminder note by the door reminding visitors to wash their hands after greeting the dog and before holding the baby.',
+        tip:'Keep hand sanitiser at key transition points around the home as a backup for moments when a sink is not immediately available, alongside regular soap-and-water washing.' },
+
+      { id:'pb33', num:'PB33', risk:'medium', title:'Separate, Regularly Cleaned Food and Water Bowls',
+        who:'All household pets and the baby',
+        what:'Pet food and water bowls placed in or near baby feeding areas, or left uncleaned for extended periods',
+        where:'The kitchen or wherever pets are fed and watered',
+        why:'Pet bowls can harbour bacteria, and keeping them separate from baby feeding areas and cleaned regularly reduces cross-contamination risk',
+        how:'Keep pet food and water bowls in a location separate from where the baby\'s bottles and food are prepared, and wash bowls daily with hot, soapy water',
+        measurement:'Recognised food-hygiene and veterinary guidance recommends daily washing of pet food and water bowls and physical separation from human food-preparation areas.',
+        example:'A family relocates their dog\'s bowls from directly beside the kitchen counter used for bottle preparation to a separate spot across the room.',
+        tip:'A dedicated sponge or cloth used only for pet bowls, kept separate from kitchen cleaning supplies, is a simple extra layer of hygiene.' },
+
+      { id:'pb34', num:'PB34', risk:'critical', title:'Preventing Pet Licking of the Baby\'s Mouth and Face',
+        who:'All household pets and the baby',
+        what:'A pet allowed to lick the baby\'s face or mouth, often seen as an affectionate greeting',
+        where:'Anywhere the pet is close enough to the baby to lick their face',
+        why:'A pet\'s mouth carries bacteria that pose a meaningfully higher risk to a newborn\'s developing immune system than to an older child or adult, and facial licking is easily prevented with consistent supervision',
+        how:'Gently but consistently redirect a pet away before it can lick the baby\'s face or mouth, and ask every visitor and caregiver to do the same',
+        measurement:'AVMA and recognised paediatric hygiene guidance recommend preventing pets from licking an infant\'s face or mouth specifically, while general calm proximity is not discouraged.',
+        example:'A family gently redirects their affectionate dog\'s greeting to a supervised sniff of the baby\'s foot instead of the face, keeping the interaction warm but safer.',
+        tip:'Redirect calmly and early, before the pet is already close enough to lick — a well-timed distraction is far easier than pulling a pet away mid-lick.' },
+
+      { id:'pb35', num:'PB35', risk:'medium', title:'Managing Pet Dander and Allergen Exposure in the Nursery',
+        who:'The baby, particularly if there is a family history of allergies or asthma',
+        what:'Pet dander and hair accumulating in the nursery without a specific cleaning routine',
+        where:'The nursery and any room where the baby spends significant time',
+        why:'Reducing dander exposure in the baby\'s primary sleep space is a reasonable precaution, particularly where allergy or asthma runs in the family, without requiring pets to be excluded from the rest of the home',
+        how:'Keep the nursery itself as a lower-dander space through regular vacuuming and dusting, an air purifier if desired, and by discouraging (rather than necessarily forbidding) the pet from spending extended time in the crib area specifically',
+        measurement:'Recognised paediatric allergy guidance identifies reduced allergen exposure in a baby\'s primary sleep space as a reasonable precaution, particularly with a family history of allergy or asthma, while noting that early pet exposure is not shown to be generally harmful for most infants.',
+        example:'A family vacuums the nursery more frequently than other rooms and keeps the door closed when the dog is shedding heavily during a seasonal coat change.',
+        tip:'This is about reducing concentrated exposure in one specific room, not about excluding pets from family life — most households manage this comfortably with routine cleaning alone.' },
+
+      { id:'pb36', num:'PB36', risk:'high', title:'Year-Round Flea and Tick Prevention',
+        who:'All household pets',
+        what:'Flea and tick prevention treated as seasonal or occasional rather than maintained consistently',
+        where:'Applies to every pet with outdoor access or exposure to other animals',
+        why:'Fleas and ticks can transmit disease to both pets and humans, and consistent prevention meaningfully reduces this risk for the whole household',
+        how:'Maintain a veterinarian-recommended flea and tick prevention product on a consistent, uninterrupted schedule throughout the year',
+        measurement:'AVMA guidance recommends year-round flea and tick prevention rather than seasonal use alone, since risk periods can vary by region and pet lifestyle.',
+        example:'A household switches from applying flea prevention only during warmer months to a consistent year-round schedule after discussing local risk with their veterinarian.',
+        tip:'Set a recurring reminder tied to the product\'s specific renewal interval, since these vary between products.' },
+
+      { id:'pb37', num:'PB37', risk:'medium', title:'Prompt Clean-Up of Pet Waste From Yard and Play Areas',
+        who:'All household pets and the baby, particularly once the baby spends time outdoors or crawling',
+        what:'Pet waste left in the yard or outdoor play area for extended periods',
+        where:'Any outdoor space the baby will use for play, tummy time, or crawling',
+        why:'Prompt clean-up reduces both the immediate hygiene concern and the risk of soil contamination in areas the baby will later explore directly',
+        how:'Clean up pet waste from yard and outdoor play areas promptly and consistently, and wash hands thoroughly afterward',
+        measurement:'CDC guidance on parasite prevention recommends prompt removal of pet faeces from outdoor areas, since some parasite eggs can become infectious within a period of days if left in soil.',
+        example:'A family adds a same-day yard clean-up to their evening routine once they know outdoor tummy time will begin in the coming months.',
+        tip:'Designate one specific area of the yard for the pet\'s toileting where possible, keeping the baby\'s play area more clearly separated.' },
+
+      { id:'pb38', num:'PB38', risk:'medium', title:'Keeping the Pet\'s Sleeping Area Separate From Baby\'s',
+        who:'All household pets and the baby',
+        what:'A pet regularly sleeping in the baby\'s crib, bassinet, or immediate sleep space',
+        where:'The nursery and any room where the baby sleeps',
+        why:'Keeping sleep spaces separate supports both safe sleep practices for the baby and reduces close, unsupervised overnight contact between pet and baby',
+        how:'Provide the pet with its own comfortable, separate sleeping area, and keep the baby\'s crib or bassinet consistently off-limits, including during naps',
+        measurement:'Recognised paediatric safe-sleep guidance recommends keeping pets out of the infant\'s sleep space, alongside its broader recommendations for a clear, empty sleep environment.',
+        example:'A cat that previously slept anywhere in the house is given a cosy dedicated bed in the hallway, with the nursery door kept closed overnight.',
+        tip:'Introduce the pet\'s new sleeping arrangement before the baby arrives so it is already an established habit, not a new restriction introduced at the same time as the baby.' },
+
+      { id:'pb39', num:'PB39', risk:'medium', title:'Washing Dropped Baby Items Before Returning Them',
+        who:'The baby, particularly during the mouthing and early crawling stages',
+        what:'A dropped pacifier, toy, or teether picked up and given straight back without cleaning',
+        where:'Anywhere the baby plays or is fed on the floor',
+        why:'Items that touch the floor in a home with pets can pick up bacteria, and a baby\'s tendency to put everything in their mouth makes this a meaningful route of exposure',
+        how:'Wash or rinse any dropped item before returning it to the baby, and keep a spare pacifier or teether on hand for moments when immediate washing is not possible',
+        measurement:'Recognised paediatric hygiene guidance recommends washing dropped feeding and mouthing items before reuse, particularly in households with pets or pet hair on floors.',
+        example:'A family keeps a small supply of spare pacifiers in different rooms so a dropped one can always be swapped and washed rather than reused straight away.',
+        tip:'A quick rinse under running water removes most surface contamination when a full wash is not immediately practical.' },
+
+      { id:'pb40', num:'PB40', risk:'low', title:'Regular Nail Trimming and Paw Hygiene',
+        who:'All household pets',
+        what:'Nail trimming and paw cleaning treated as occasional rather than routine',
+        where:'Wherever the pet is groomed, and at entry points after outdoor time',
+        why:'Well-maintained nails reduce scratch risk, and clean paws reduce the amount of outdoor bacteria and debris tracked into areas where the baby plays',
+        how:'Keep nail trimming on a regular schedule, and wipe paws after outdoor time before the pet returns to areas where the baby spends time',
+        measurement:'Recognised veterinary guidance recommends nail trimming approximately every few weeks depending on the individual pet, and paw wiping after outdoor exposure as a simple hygiene habit.',
+        example:'A household keeps a towel by the back door specifically for wiping the dog\'s paws after walks, before it settles in the living room where the baby plays.',
+        tip:'A pet-safe paw-wipe or a simple damp cloth both work well — the consistency of the habit matters more than the specific product.' },
+
+      { id:'pb41', num:'PB41', risk:'medium', title:'Awareness of Ringworm and Other Skin Conditions',
+        who:'All household pets and members, particularly the baby',
+        what:'A pet\'s skin or coat changes — patches of hair loss, scaling, or irritation — not checked or addressed promptly',
+        where:'Applies to the pet\'s coat and skin, checked during regular grooming or petting',
+        why:'Ringworm and some other skin conditions can transfer between pets and people, and a newborn\'s skin is especially sensitive, making prompt identification and treatment worthwhile',
+        how:'Check the pet\'s coat and skin periodically during grooming, and see a veterinarian promptly if any unusual patch, scaling, or irritation appears',
+        measurement:'AVMA guidance identifies ringworm as a zoonotic skin condition that can transfer between pets and people, and recommends prompt veterinary evaluation of any unexplained skin change.',
+        example:'A small bald, scaly patch noticed on a cat\'s ear during a grooming session is checked by a veterinarian the same week and treated before it spreads.',
+        tip:'Any new skin change is worth a veterinary opinion rather than a wait-and-see approach, especially with a baby in the home.' },
+
+      { id:'pb42', num:'PB42', risk:'medium', title:'Briefing Visitors and Caregivers on Hygiene Rules',
+        who:'Regular visitors, extended family, and any caregiver spending time with pet and baby',
+        what:'Visitors and caregivers unaware of the household\'s specific hygiene expectations around pets and the baby',
+        where:'Applies to every visit and caregiving arrangement',
+        why:'Hygiene habits only work if everyone in the home follows them, and a single unaware visitor can unknowingly bypass careful routines the household has built',
+        how:'Give a brief, friendly explanation of the household\'s key hygiene rules — hand washing after pet contact, no face licking, litter box precautions — to regular visitors and any caregiver',
+        measurement:'Recognised guidance for maintaining consistent hygiene practices in multi-person households recommends briefing all regular visitors and caregivers, since safety habits depend on being followed by everyone present.',
+        example:'A babysitter is given a short written note listing the household\'s pet-related hygiene rules on their first day caring for the baby.',
+        tip:'A simple printed card near the door or fridge works well as a quick, friendly reminder for visitors who might otherwise forget in the moment.' }
+    ]
+  },
+  {
+    id: 4, name: 'Feeding, Sleep & Shared Spaces', icon: '🚪',
+    desc: '14 checks: baby gates and physical barriers, feeding-time separation, no unsupervised pet access to the crib or bassinet, nursery boundaries, crate training as a safe space, and safe shared floor time between pet and baby.',
+    checks: [
+      { id:'pb43', num:'PB43', risk:'high', title:'Baby Gates Installed at the Nursery and Key Transition Points',
+        who:'The whole household',
+        what:'Baby gates missing or inconsistently used at the nursery entrance and other key transition points',
+        where:'The nursery doorway, top and bottom of stairs, and any other boundary the household wants to control',
+        why:'A physical barrier provides a reliable, low-effort layer of control that does not depend on someone remembering to close a door every single time',
+        how:'Install sturdy, correctly fitted baby gates at the nursery and any other key transition points, and use them consistently rather than only when it feels necessary',
+        measurement:'Recognised home-safety guidance recommends securely mounted gates meeting standard child-safety specifications at key household transition points once a baby is mobile.',
+        example:'A gate installed at the nursery doorway is used consistently from the day it goes up, rather than only once the family notices a specific reason to close it.',
+        tip:'Choose a gate style the household will actually use every time — a slightly less convenient gate that gets propped open defeats its own purpose.' },
+
+      { id:'pb44', num:'PB44', risk:'medium', title:'Feeding-Time Separation Between Pet and Baby',
+        who:'All household pets and the baby',
+        what:'Pet feeding and baby feeding happening in the same space at the same time without any separation',
+        where:'The kitchen or wherever pets and baby are both fed',
+        why:'Pets can be more protective of food and more easily startled during their own feeding time, making this a moment worth deliberately separating from baby\'s presence',
+        how:'Feed pets in a separate room or at a different time from when the baby is being fed nearby, and avoid letting the baby approach a pet\'s bowl during feeding',
+        measurement:'Recognised veterinary behaviour guidance identifies feeding time as a higher-risk period for resource-guarding behaviour and recommends managing it with separation.',
+        example:'A family moves their dog\'s feeding station to the laundry room, away from the kitchen where the baby is fed in a highchair each day.',
+        tip:'This separation habit becomes especially important once the baby is mobile and could approach a feeding pet unsupervised.' },
+
+      { id:'pb45', num:'PB45', risk:'critical', title:'No Unsupervised Pet Access to the Crib or Bassinet',
+        who:'All household pets and the baby',
+        what:'A pet able to jump into or reach the crib or bassinet when the baby is sleeping or unattended',
+        where:'The nursery or wherever the baby sleeps',
+        why:'An unsupervised pet near a sleeping baby in an enclosed space like a crib carries a genuinely serious risk, regardless of how gentle the pet has been in every other context',
+        how:'Keep the nursery door closed or gated whenever the baby is sleeping and unsupervised, and never allow a pet unsupervised access to the crib or bassinet under any circumstances',
+        measurement:'AVMA and recognised paediatric safe-sleep guidance identify unsupervised pet access to an infant\'s sleep space as a hazard requiring an absolute, no-exception rule.',
+        example:'A family fits their nursery door with a simple latch specifically so the room is never accidentally left accessible to their cat during nap times.',
+        tip:'Treat this as a non-negotiable rule with zero exceptions, communicated clearly to every caregiver and visitor, rather than a judgement call made in the moment.' },
+
+      { id:'pb46', num:'PB46', risk:'medium', title:'Crate or Mat Training as a Positive Safe Space',
+        who:'Dogs in particular, though the principle extends to other pets that respond well to a defined resting space',
+        what:'No trained, positive association with a specific resting spot the dog can be directed to during high-need baby moments',
+        where:'A consistent location in the home, away from the busiest baby-care areas',
+        why:'A well-trained "place" or crate cue gives the household a reliable way to settle the dog during moments that need full attention on the baby, without the dog feeling excluded or punished',
+        how:'Train a positive "place" or crate cue well before it is urgently needed, using rewards so the space is associated with comfort rather than being sent away',
+        measurement:'Recognised veterinary behaviour guidance recommends positive place or crate training as a practical management tool for households balancing a dog\'s needs with a new baby\'s demands.',
+        example:'A dog trained to go to a mat and settle on cue is directed there calmly during a particularly demanding feeding session, rather than being physically ushered out of the room.',
+        tip:'Practise the cue regularly during calm moments, not only when you actually need the dog out of the way — this keeps the association positive.' },
+
+      { id:'pb47', num:'PB47', risk:'high', title:'Nursery Door Kept Closed or Gated When Unsupervised',
+        who:'All household pets and the baby',
+        what:'The nursery door left open by habit when no one is actively supervising the room',
+        where:'The nursery',
+        why:'A closed or gated door removes the possibility of an unsupervised pet-baby interaction entirely, which is far more reliable than depending on remembering to check',
+        how:'Make closing or gating the nursery door an automatic habit whenever it is unsupervised, treating it the same way as any other fixed household safety rule',
+        measurement:'Recognised guidance for pet-baby household safety identifies a consistently closed or gated nursery as one of the most effective and simplest control measures available.',
+        example:'A magnetic door-closer reminder is added to the nursery door frame as a visual cue until closing it becomes fully automatic for every household member.',
+        tip:'Make the habit as automatic as locking the front door — build it into leaving the room, not something to remember separately.' },
+
+      { id:'pb48', num:'PB48', risk:'low', title:'Positioning the Pet\'s Resting Area Away From Baby\'s Floor-Play Area',
+        who:'All household pets and the baby',
+        what:'A pet\'s bed or favourite resting spot placed directly in the middle of the baby\'s regular floor-play area',
+        where:'Living rooms and any shared floor-play space',
+        why:'Some separation between a pet\'s resting spot and the baby\'s main play area reduces the number of accidental, close-proximity surprises for both',
+        how:'Position the pet\'s bed or resting area to one side of the room, away from the centre of the baby\'s regular floor-play space, while still keeping it comfortable and accessible',
+        measurement:'Recognised guidance for shared pet-baby living spaces recommends deliberate spatial separation between resting and play areas as a simple layout adjustment.',
+        example:'A dog bed previously in the middle of the living room floor is moved to a corner near a window, out of the main path of the baby\'s crawling area.',
+        tip:'Watch how the baby actually moves around the room over a few days before deciding on the pet\'s new spot — the busiest path is not always where it first appears to be.' },
+
+      { id:'pb49', num:'PB49', risk:'high', title:'Supervised Floor Time With Clear Pet Boundaries',
+        who:'All household pets and the baby, once the baby has regular floor time',
+        what:'Floor time happening with the pet in the same space but without active, attentive supervision',
+        where:'Any room where the baby has tummy time or floor play with a pet present',
+        why:'Floor level brings pet and baby into much closer physical proximity than any other setting in the home, and this is exactly when close, attentive supervision matters most',
+        how:'Always have an adult giving full, active attention during any floor time where a pet is present, ready to calmly intervene or redirect at the first sign of discomfort from either',
+        measurement:'AVMA guidance on pet-child safety identifies floor-level interaction as a higher-risk setting requiring active, not passive, supervision.',
+        example:'A parent sits directly beside the baby during tummy time whenever the family dog is in the room, rather than supervising from across the room while doing something else.',
+        tip:'"Active supervision" means within arm\'s reach and watching, not simply being present in the same room.' },
+
+      { id:'pb50', num:'PB50', risk:'medium', title:'Managing Multi-Pet Feeding Stations Away From Baby Traffic Areas',
+        who:'Multi-pet households and the baby',
+        what:'Several pets\' feeding stations spread across an area the baby regularly crawls or walks through',
+        where:'Kitchen, utility room, or wherever multiple pets are fed',
+        why:'Multiple feeding stations in a busy traffic area increase both the chance of a baby approaching a feeding pet and the chance of tension between pets over food, especially with a baby nearby adding extra stimulation',
+        how:'Group multi-pet feeding stations into a single, contained area away from the baby\'s main routes through the home, ideally behind a gate or door during feeding times',
+        measurement:'Recognised guidance for multi-pet household management recommends contained, separated feeding areas, particularly where more than one animal\'s food-related tension is a possibility.',
+        example:'A household with two dogs and a cat moves all feeding stations into a gated utility room, away from the hallway the baby uses to move between rooms.',
+        tip:'Feed multi-pet households at the same time in their designated area rather than staggered throughout the day, so the "food zone" stays predictable and contained.' },
+
+      { id:'pb51', num:'PB51', risk:'low', title:'Introducing the Stroller and Baby Equipment Calmly',
+        who:'All household pets',
+        what:'A pet\'s first encounter with a stroller, baby swing, or other large equipment happening suddenly, in motion, with the baby already inside',
+        where:'Wherever baby equipment is used or stored in the home',
+        why:'Large, moving, unfamiliar objects can startle a pet, and a calm first exposure reduces the chance of a defensive or fearful reaction the first time it is used with the baby aboard',
+        how:'Let the pet investigate new baby equipment while stationary and empty first, rewarding calm curiosity, before it is used in motion with the baby',
+        measurement:'Recognised veterinary behaviour guidance recommends gradual, positive exposure to new equipment before it is used in its full, active form around the pet.',
+        example:'A stroller is left open and stationary in the living room for a few days, letting the family cat sniff and investigate it calmly before it is used outside with the baby.',
+        tip:'Fold and unfold, open and close the equipment a few times in front of the pet during this calm introduction — the sound and motion themselves are often the more startling part.' },
+
+      { id:'pb52', num:'PB52', risk:'medium', title:'Extending Supervision to Shared Pet-Baby Spaces via Baby Monitor',
+        who:'The baby and any pet with access to the baby\'s room or sleep space',
+        what:'A baby monitor used only to check on the baby, without also giving a view of whether a pet has entered the room',
+        where:'The nursery and any monitored room',
+        why:'A monitor that also shows the room\'s access point gives an extra layer of reassurance that the "no unsupervised pet access" rule is being maintained, particularly during naps',
+        how:'Where practical, position the baby monitor camera to also show the doorway or entry point to the room, so unexpected pet access would be visible',
+        measurement:'Recognised guidance for shared pet-baby household monitoring suggests using existing baby monitoring equipment to add visibility over room access, as a supplement to physical barriers, not a replacement for them.',
+        example:'A family adjusts their monitor\'s camera angle slightly to include the gated doorway, giving a clear view if the gate were ever left open.',
+        tip:'A monitor is a helpful supplement, not a substitute for a properly closed door or gate — treat it as backup reassurance, not the primary safeguard.' },
+
+      { id:'pb53', num:'PB53', risk:'high', title:'No Feeding Pets From the Baby\'s Meals or Hands',
+        who:'The baby, household pets and any caregiver present at mealtimes',
+        what:'A pet fed directly from the baby\'s highchair, hands, or plate, often encouraged as a cute habit',
+        where:'Wherever the baby eats',
+        why:'This habit can encourage a pet to actively approach and hover around the baby during every meal, increasing the chance of an unwanted grab, nip, or resource-guarding moment over food',
+        how:'Keep pets away from the baby\'s highchair and mealtimes entirely, and ask every caregiver and visitor not to encourage hand-feeding from the baby to the pet',
+        measurement:'Recognised veterinary behaviour guidance advises against encouraging pets to take food directly from a young child\'s hands, since it can reinforce close, food-motivated hovering around the child.',
+        example:'A grandparent who used to let the family dog "clean up" dropped food directly from the baby\'s hand is asked to stop, and the dog is instead rewarded separately after mealtimes.',
+        tip:'If the goal is to reduce mess, feed the pet its own small treat after mealtime clean-up instead, breaking the direct hand-to-mouth association.' },
+
+      { id:'pb54', num:'PB54', risk:'medium', title:'Safe Transport Rules When Travelling With Both Pet and Baby',
+        who:'The whole household when travelling together in a vehicle',
+        what:'A pet and baby transported together without a clear plan for restraint and separation in the vehicle',
+        where:'Any vehicle used to transport both pet and baby',
+        why:'An unrestrained pet in a moving vehicle is a safety risk for everyone, and this risk is amplified with a baby also on board',
+        how:'Use an appropriate pet restraint (a secured crate, harness, or barrier) every time a pet travels in the same vehicle as the baby, positioned so the pet cannot reach the baby\'s car seat',
+        measurement:'Recognised road-safety guidance recommends a secured pet restraint for vehicle travel, both for the pet\'s own safety and to prevent it becoming a projectile or distraction in a sudden stop.',
+        example:'A dog that used to ride loose in the back seat is fitted with a secured travel harness once car journeys with the baby become routine.',
+        tip:'Practise the restraint system on short, low-stakes trips before relying on it for a longer journey with the baby along.' },
+
+      { id:'pb55', num:'PB55', risk:'high', title:'Revisiting Pet Access to Baby\'s Room as Baby Becomes Mobile',
+        who:'All household pets and the baby',
+        what:'The household\'s original nursery access rules left unchanged even as the baby starts crawling and reaching further',
+        where:'The nursery and any room the baby now moves through independently',
+        why:'A mobile baby changes the risk picture significantly — a rule that worked well for a stationary newborn may need tightening once the baby can independently approach a pet',
+        how:'Reassess nursery and shared-space access rules specifically at the point the baby becomes mobile, adjusting barriers and supervision levels to match the new reality',
+        measurement:'Recognised guidance for pet-baby household safety recommends reviewing access and supervision rules at each new developmental stage, rather than assuming initial rules remain sufficient.',
+        example:'A family that previously allowed supervised nursery access for their cat tightens the rule to gated access only, once their baby begins crawling toward the cat\'s bed.',
+        tip:'Mark the "starts crawling" milestone as a specific trigger to review every pet-related boundary in the home, not just the nursery door.' },
+
+      { id:'pb56', num:'PB56', risk:'high', title:'Overnight Sleep Arrangements Keep Pets Out of Baby\'s Sleep Space',
+        who:'All household pets and the baby',
+        what:'A pet that has access to the bedroom or sleep space overnight without a clear boundary around the baby\'s crib or bassinet',
+        where:'The nursery or wherever the baby sleeps overnight',
+        why:'Overnight hours involve reduced supervision by definition, making a firm physical boundary around the baby\'s sleep space especially important during this time',
+        how:'Maintain the same closed-door or gated nursery rule overnight as during the day, with no exceptions for a pet that "always sleeps there anyway"',
+        measurement:'Recognised paediatric safe-sleep guidance recommends keeping the infant sleep environment free of pets throughout the night, consistent with broader safe-sleep recommendations.',
+        example:'A cat that always used to sleep at the foot of the parents\' bed is kept out of the nursery specifically, with its own comfortable overnight spot established elsewhere.',
+        tip:'Set the overnight rule up before the baby\'s sleep space is in regular use, so it is already a settled habit rather than a change introduced under overnight time pressure.' }
+    ]
+  },
+  {
+    id: 5, name: 'Supervision Rules as Baby Grows', icon: '👀',
+    desc: '14 checks: never leaving baby and pet alone together, constant supervision once baby is mobile, preventing tail and ear pulling, recognising resource guarding, teaching gentle touch, and honouring a pet\'s need for a break.',
+    checks: [
+      { id:'pb57', num:'PB57', risk:'critical', title:'Never Leaving Baby and Pet Alone Together, at Any Age',
+        who:'All household pets and the baby, at every developmental stage',
+        what:'Stepping out of the room "just for a moment" while baby and pet are together, at any age or stage',
+        where:'Anywhere in the home where pet and baby could be together unsupervised',
+        why:'The overwhelming majority of documented pet-related injuries to infants and young children happen during moments of no supervision, even with pets that have never shown any prior sign of concern',
+        how:'Make active supervision an absolute, no-exception household rule whenever pet and baby are in the same space, regardless of how calm or trusted the pet has always been',
+        measurement:'AVMA and recognised paediatric safety guidance consistently identify unsupervised access as the single greatest risk factor in pet-related infant injury, regardless of the individual pet\'s history.',
+        example:'A parent brings the baby along or moves the pet to its retreat space every time they need to answer the door, rather than leaving the two together even briefly.',
+        tip:'If leaving the room is unavoidable, take the baby or move the pet — never assume "just a minute" is safe, no matter how well the visit has gone so far.' },
+
+      { id:'pb58', num:'PB58', risk:'critical', title:'Constant Active Adult Supervision Once Baby Becomes Mobile',
+        who:'All household pets and a crawling, cruising or walking baby',
+        what:'Supervision that relaxes once the family has "gotten used to" the pet and baby being around each other',
+        where:'Anywhere in the home the mobile baby can now reach a pet independently',
+        why:'A baby who can move independently changes the risk picture significantly, since the baby — not just the pet — is now the one initiating unpredictable, close-range contact',
+        how:'Increase, not decrease, the level of active supervision specifically at the point the baby becomes mobile, treating this as a new stage requiring fresh attention rather than an extension of an already-comfortable routine',
+        measurement:'Recognised paediatric and veterinary behaviour guidance identifies the onset of independent mobility as a specific higher-risk transition requiring heightened, active supervision.',
+        example:'A family that had grown relaxed about supervision resets their attention level the week their baby starts crawling, treating pet-baby time with the same vigilance as the very first introductions.',
+        tip:'Watch specifically for the moment your baby starts reaching, grabbing or moving toward the pet independently — this is the real trigger point, not a fixed age.' },
+
+      { id:'pb59', num:'PB59', risk:'high', title:'Preventing Tail, Ear and Fur Pulling; Teaching Gentle Touch Early',
+        who:'The baby and toddler, and household pets on the receiving end of handling',
+        what:'A baby or toddler grabbing a pet\'s tail, ears or fur, often without any intent to cause discomfort but with real potential to provoke a defensive reaction',
+        where:'Anywhere the child and pet are in close physical contact',
+        why:'Rough handling is one of the most common triggers for a defensive bite or scratch, and even a well-tolerated pet has a limit that a small child cannot be expected to judge on their own',
+        how:'Actively supervise and gently redirect any grabbing behaviour the moment it starts, and begin teaching "gentle hands" as soon as the child is developmentally able to understand simple guidance',
+        measurement:'AVMA and recognised paediatric safety guidance identify rough or grabbing handling as a leading preventable trigger for defensive pet reactions toward young children.',
+        example:'A toddler reaching to grab a dog\'s ear has their hand gently guided instead into a slow, flat-palmed stroke, with praise for the gentler touch.',
+        tip:'Demonstrate gentle touch on a stuffed animal with the toddler before practising on the real pet, so the motion is already familiar and calm.' },
+
+      { id:'pb60', num:'PB60', risk:'critical', title:'Recognising and Managing Resource Guarding Around Food, Toys and Resting Spots',
+        who:'All household pets and a mobile baby or toddler',
+        what:'A pet showing possessive behaviour around food, toys, chews or a resting spot when a child approaches',
+        where:'Anywhere the pet has access to food, toys, or a resting area the child could also reach',
+        why:'Resource guarding is one of the most well-documented and preventable causes of serious bite injuries to young children, precisely because a toddler cannot be expected to read or respect the warning signs on their own',
+        how:'Identify anything the pet guards (food, a specific toy, a bed) and manage access proactively — feed and give guarded items only in a space the child cannot reach, and consult a veterinarian or behaviourist promptly if guarding behaviour is observed',
+        measurement:'AVMA and recognised veterinary behaviour guidance identify resource guarding around a young child as a serious risk factor requiring active management and, where present, professional behavioural support.',
+        example:'A dog that guards a favourite chew toy has that toy removed from any room the toddler has access to, and the family begins working with a veterinary behaviourist on the underlying pattern.',
+        tip:'Do not wait for a growl or snap to treat guarding seriously — subtle stiffening or a hard stare over an item is reason enough to act immediately.' },
+
+      { id:'pb61', num:'PB61', risk:'high', title:'Teaching a Toddler Not to Approach a Pet That Is Eating or Sleeping',
+        who:'Toddlers and household pets',
+        what:'A toddler approaching or disturbing a pet while it eats or sleeps, two of the situations where a startled or guarding response is most likely',
+        where:'Anywhere the pet eats or rests in the home',
+        why:'Both eating and sleeping are moments when a pet is naturally less tolerant of sudden approach, and this is true even of pets with an otherwise very easy-going temperament',
+        how:'Teach the toddler a simple, consistent rule — "we don\'t bother [pet\'s name] when they\'re eating or sleeping" — reinforced every single time, alongside active supervision until the rule is reliably followed',
+        measurement:'Recognised paediatric and veterinary behaviour guidance identifies feeding and sleeping as two of the highest-risk moments for child-pet interaction and recommends specific, repeated teaching around both.',
+        example:'A toddler who runs over to pet the dog during its dinner is calmly redirected every time, with the same simple explanation repeated consistently until the habit forms.',
+        tip:'Toddlers learn rules through repetition far more than through a single explanation — expect to reinforce this rule many times before it becomes automatic.' },
+
+      { id:'pb62', num:'PB62', risk:'medium', title:'Supervising First Steps and the Pet\'s Reaction to Sudden Movement',
+        who:'The baby learning to walk, and household pets nearby',
+        what:'A pet\'s reaction to a baby\'s unsteady, sudden, or unpredictable early movement not specifically anticipated',
+        where:'Anywhere the baby practises walking near a pet',
+        why:'Sudden, unpredictable movement (a wobble, a fall, a lurch toward the pet) can startle even a very calm pet, and this period of new mobility deserves specific extra attention',
+        how:'Supervise walking practice with particular attention to the pet\'s reaction, and be ready to calmly create distance if the pet seems unsettled by the baby\'s unsteady movement',
+        measurement:'Recognised veterinary behaviour guidance identifies sudden or unpredictable child movement as a common trigger for a startled pet response, warranting close attention during this specific developmental stage.',
+        example:'A family notices their dog moving away each time the baby lurches while learning to walk and gives the dog the space to do so rather than encouraging closeness during this stage.',
+        tip:'Let the pet choose its own distance during this wobbly stage — closeness can always be reintroduced gradually once the baby\'s movements are steadier.' },
+
+      { id:'pb63', num:'PB63', risk:'high', title:'Establishing a Reliable "Leave It" or Recall Cue for High-Risk Moments',
+        who:'Dogs in particular, as a practical management tool for the whole family',
+        what:'No reliably trained cue to quickly redirect the dog away from a developing situation',
+        where:'Anywhere in the home where a quick redirection might be needed',
+        why:'A well-trained "leave it" or recall cue gives an adult a fast, reliable way to interrupt a developing situation before it escalates, without needing to physically intervene between dog and child',
+        how:'Train and regularly practise a solid "leave it" and recall cue in calm, low-pressure settings well before it is ever needed in a real situation',
+        measurement:'Recognised veterinary behaviour guidance recommends a reliably trained interruption cue as a practical safety tool in households with young children and dogs.',
+        example:'A dog reaching toward a dropped toy the toddler is also reaching for responds immediately to a practised "leave it" cue, giving the parent time to step in calmly.',
+        tip:'Practise the cue regularly in low-stakes situations so it is genuinely reliable, not just occasionally, before counting on it in a higher-stakes moment.' },
+
+      { id:'pb64', num:'PB64', risk:'high', title:'Watching for the Pet\'s Tolerance Threshold With a Curious Toddler',
+        who:'All household pets around an increasingly curious, mobile toddler',
+        what:'A pet\'s tolerance for repeated toddler attention assumed to be unlimited because it has been fine so far',
+        where:'Anywhere the toddler and pet interact regularly',
+        why:'Tolerance can wear thin with repetition even in a generally patient pet, and a toddler\'s persistent curiosity can gradually push past a threshold that was never tested during shorter early interactions',
+        how:'Watch for cumulative signs of tiring tolerance across a session — not just a single dramatic signal — and proactively end interactions before the pet reaches its limit',
+        measurement:'Recognised veterinary behaviour guidance notes that repeated, prolonged interaction can erode a pet\'s tolerance even without any single alarming signal, and recommends ending sessions proactively.',
+        example:'A parent notices their usually patient cat has been followed and petted by the toddler for an unusually long stretch and calmly ends the session before any stress signal appears.',
+        tip:'Build in natural breaks during longer toddler-pet play sessions, rather than waiting for a stress signal to signal that a break is already overdue.' },
+
+      { id:'pb65', num:'PB65', risk:'medium', title:'Managing Jumping and Excitement Around a Wobbly Toddler',
+        who:'Dogs prone to jumping up, and a toddler still finding their balance',
+        what:'A dog\'s excited jumping-up behaviour, tolerated around adults, continuing unmanaged around an unsteady toddler',
+        where:'Anywhere the dog gets excited near the toddler, such as greetings or play',
+        why:'A jump that an adult easily absorbs can knock over or startle a toddler who is still developing balance and stability',
+        how:'Work on the dog\'s jumping behaviour specifically around the toddler, teaching an alternative greeting behaviour such as sitting, and manage excitement levels during greetings',
+        measurement:'Recognised veterinary behaviour guidance recommends specific greeting-behaviour training for dogs in households with young children, given the fall risk from jumping.',
+        example:'A dog that used to jump up in greeting is taught to sit for attention instead, practised consistently until it becomes the automatic response even around an excited toddler.',
+        tip:'Ask visitors not to encourage or reward jumping "just this once" — consistency from everyone is what makes the retraining stick.' },
+
+      { id:'pb66', num:'PB66', risk:'high', title:'Keeping a Physical Barrier or Adult Between an Overwhelmed Pet and Toddler',
+        who:'Any pet showing early signs of being overwhelmed, and the toddler',
+        what:'No immediate way to create distance when a pet begins showing discomfort around a persistent toddler',
+        where:'Anywhere a pet might need a fast, reliable way to gain distance from a toddler',
+        why:'Having an immediate option — an adult stepping in, a gate, a quick redirect — turns an early stress signal into a non-event rather than an escalating situation',
+        how:'Stay close enough during toddler-pet time to physically step in immediately if needed, and keep gates or barriers ready to use at the first sign the pet wants distance',
+        measurement:'AVMA guidance on child-pet safety recommends an adult remain within immediate physical reach during any toddler-pet interaction, ready to intervene without delay.',
+        example:'A parent sitting nearby steps in calmly the moment their dog shifts away from an approaching toddler, redirecting the toddler\'s attention before the dog needs to react further.',
+        tip:'Position yourself between the pet\'s retreat path and the toddler during supervised time, so you are naturally positioned to intervene quickly if needed.' },
+
+      { id:'pb67', num:'PB67', risk:'medium', title:'Teaching a Child Appropriate Ways to Interact With Pets as They Grow',
+        who:'Growing children of all ages, and household pets',
+        what:'Pet-interaction skills that are never explicitly taught, leaving the child to learn by trial and error',
+        where:'Applies throughout the home as the child grows and interaction becomes more independent',
+        why:'Deliberately teaching appropriate interaction — asking before petting, reading a pet\'s body language, respecting a retreat — builds skills that keep both the child and pet safer for years, not just during infancy',
+        how:'As the child grows, actively teach age-appropriate pet interaction skills, gradually increasing what they are expected to understand and practise independently',
+        measurement:'Recognised paediatric and veterinary behaviour guidance recommends structured, ongoing pet-safety education for children as they grow, rather than a single early conversation.',
+        example:'A preschooler is taught to always ask "can I pet you?" (directed at a supervising adult) before approaching any pet, including visiting pets outside the home.',
+        tip:'Revisit and build on these lessons at each new developmental stage — what a two-year-old needs to know is different from what a five-year-old is ready to learn.' },
+
+      { id:'pb68', num:'PB68', risk:'high', title:'Never Approaching a Sleeping Pet — Teaching the Child to Wait',
+        who:'Children of all ages and household pets',
+        what:'A child startling or waking a sleeping pet by approaching suddenly or touching it while it sleeps',
+        where:'Wherever the pet naps or sleeps around the home',
+        why:'A pet startled awake, particularly suddenly touched while sleeping, is significantly more likely to react defensively than the same pet approached while alert',
+        how:'Teach every child in the household a firm rule of never touching or approaching a sleeping pet, and consistently enforce and model this rule as a family',
+        measurement:'AVMA guidance identifies startling a sleeping pet as a well-documented and preventable trigger for a defensive bite, warranting a firm household rule rather than case-by-case judgement.',
+        example:'A young child who used to climb onto the sofa where the dog was napping is taught instead to wait quietly and call the dog\'s name gently from a distance.',
+        tip:'Teach the child to gently say the pet\'s name from a short distance and wait for it to wake naturally, rather than approaching or touching it directly.' },
+
+      { id:'pb69', num:'PB69', risk:'high', title:'Recognising Signs a Pet Needs a Break and Honouring It Immediately',
+        who:'All household pets, at every stage of the baby\'s growth',
+        what:'A pet\'s clear signal that it wants space — walking away, going to its retreat space, showing stress signals — overridden or delayed rather than acted on immediately',
+        where:'Anywhere pet and child interact',
+        why:'Immediately honouring a pet\'s signal for space is one of the most reliable ways to prevent escalation, and consistently doing so also builds the pet\'s trust that its signals will be respected',
+        how:'Treat any signal that a pet wants distance as an immediate cue to end the interaction and let the pet retreat, without delay or attempting to "just finish" whatever was happening',
+        measurement:'AVMA and recognised veterinary behaviour guidance identify prompt honouring of a pet\'s retreat signal as a core preventive principle in households with young children.',
+        example:'A dog that gets up and walks toward its bed mid-play with the toddler is allowed to go immediately, with the toddler gently redirected to another activity.',
+        tip:'Praise the pet quietly for choosing to remove itself rather than reacting — this reinforces that walking away is always the right choice.' },
+
+      { id:'pb70', num:'PB70', risk:'medium', title:'House Rules for Visiting Children\'s Interactions With the Family Pet',
+        who:'Visiting children, their accompanying adults, and the family pet',
+        what:'Visiting children who do not know the household\'s pet-interaction rules and are not consistently supervised around the pet',
+        where:'Applies whenever children other than the household\'s own are visiting',
+        why:'A visiting child is far less familiar with an individual pet\'s specific cues and tolerance than a household member, making clear rules and closer supervision especially important',
+        how:'Set clear, simple rules for visiting children before they interact with the pet, and maintain closer supervision than usual during their visit, regardless of how well the pet knows the family',
+        measurement:'Recognised guidance for pet-child safety identifies visiting or unfamiliar children as a higher-risk group for pet interaction, warranting specific rules and closer supervision.',
+        example:'A family briefly explains their dog\'s "ask first, gentle hands" rule to a visiting cousin before playtime begins, and an adult stays close throughout the visit.',
+        tip:'It is entirely reasonable to keep the pet in a separate, comfortable space during a visit if supervision cannot be guaranteed at the level a visiting child needs.' }
+    ]
+  },
+  {
+    id: 6, name: 'Ongoing Household Management & Care', icon: '📅',
+    desc: '14 checks: grooming and veterinary care schedules, watching for behaviour changes, multi-pet household dynamics, emergency and evacuation planning that includes pets, choosing a trusted pet sitter, and keeping the whole household\'s rules consistent.',
+    checks: [
+      { id:'pb71', num:'PB71', risk:'low', title:'A Regular Grooming Schedule for Coat and General Hygiene',
+        who:'All household pets',
+        what:'Grooming that happens irregularly or only when noticeably overdue',
+        where:'At home or with a professional groomer',
+        why:'Regular grooming supports a pet\'s general comfort and health, and a well-maintained coat sheds less loose hair and dander around the home, including the baby\'s spaces',
+        how:'Establish a grooming schedule appropriate to the pet\'s coat type and needs, and keep to it consistently rather than reactively',
+        measurement:'AVMA guidance recommends a grooming routine tailored to the individual pet\'s coat and breed, generally reviewed with a veterinarian or professional groomer.',
+        example:'A long-haired dog is put on a recurring professional grooming schedule instead of the previous "whenever it looks matted" approach.',
+        tip:'A grooming schedule tied to an existing recurring reminder (like a monthly household task) is easier to maintain than one relying on noticing the coat looks overdue.' },
+
+      { id:'pb72', num:'PB72', risk:'medium', title:'Keeping Up With Annual and Routine Veterinary Wellness Visits',
+        who:'All household pets',
+        what:'Routine wellness visits postponed or skipped once the household becomes busier with a new baby',
+        where:'The pet\'s usual veterinary practice',
+        why:'Regular veterinary care catches health issues early and keeps preventive care current, both of which matter more, not less, once a pet is sharing a home with a young child',
+        how:'Keep annual or veterinarian-recommended wellness visits on the household calendar, treating them with the same priority as the baby\'s own routine care appointments',
+        measurement:'AVMA guidance recommends at least annual wellness visits for adult pets, with more frequent visits for puppies, kittens, senior pets, or those with ongoing health conditions.',
+        example:'A family adds their dog\'s annual check-up to the same shared calendar used for the baby\'s paediatric appointments, so neither is forgotten.',
+        tip:'Book the next wellness visit before leaving the current one — it is far easier to keep a routine going than to restart it after a gap.' },
+
+      { id:'pb73', num:'PB73', risk:'high', title:'Watching for Behaviour Changes That May Signal Stress, Illness or Pain',
+        who:'All household pets, on an ongoing basis',
+        what:'Gradual changes in appetite, activity, sleep, or interaction style that are noticed but not acted on',
+        where:'Applies to the pet\'s overall behaviour throughout the home',
+        why:'Behaviour change is often the earliest sign of either a medical issue or a building stress response, and both are far easier to address when caught early',
+        how:'Stay attentive to changes in the pet\'s normal patterns on an ongoing basis, and follow up with a veterinarian or behaviourist promptly if a change persists for more than a few days',
+        measurement:'AVMA guidance identifies persistent behaviour change as a reliable early indicator worth prompt veterinary evaluation, since animals cannot report discomfort verbally.',
+        example:'A cat that has been hiding more than usual for over a week is taken for a veterinary check, which identifies and begins treating an underlying medical issue.',
+        tip:'When in doubt, treat a persistent behaviour change as worth a veterinary opinion rather than waiting to see if it resolves on its own.' },
+
+      { id:'pb74', num:'PB74', risk:'medium', title:'Monitoring Pet-to-Pet Dynamics in Multi-Pet Households After Baby Arrives',
+        who:'Multi-pet households',
+        what:'Tension or a shift in the established dynamic between pets that goes unnoticed once household attention shifts heavily toward the baby',
+        where:'Applies throughout the home wherever multiple pets interact',
+        why:'A new baby changes the whole household\'s rhythm, and established pet-to-pet relationships can shift under this stress in ways worth monitoring, separate from pet-baby dynamics',
+        how:'Keep an eye on the existing relationship between household pets specifically, watching for any new tension, avoidance, or conflict that emerges after the baby\'s arrival',
+        measurement:'Recognised veterinary behaviour guidance notes that a major household change can affect existing multi-pet dynamics, not only the dynamic between pets and the new family member.',
+        example:'A household notices their two cats, previously easy-going with each other, becoming more tense after the baby\'s arrival and gives each more separate, protected space and attention.',
+        tip:'Do not assume all new stress is baby-related — sometimes a multi-pet household\'s own internal balance is what has shifted and needs its own attention.' },
+
+      { id:'pb75', num:'PB75', risk:'high', title:'An Emergency and Evacuation Plan That Includes Pets and Baby Together',
+        who:'The whole household',
+        what:'A household emergency or evacuation plan that accounts for the baby but does not specifically address how pets will be safely evacuated at the same time',
+        where:'Applies to the whole home\'s emergency planning',
+        why:'A genuine emergency needs a plan that works for the whole household at once — an unplanned scramble to manage both a baby and pets simultaneously wastes critical time',
+        how:'Include pets explicitly in the household\'s written emergency and evacuation plan, covering carriers, leashes, and who is responsible for which family member (human or animal) during an evacuation',
+        measurement:'Recognised emergency-preparedness guidance recommends including pets by name in a household\'s written evacuation plan, with assigned responsibility for each family member.',
+        example:'A household\'s evacuation plan specifically assigns one adult to grab the baby and go bag, and the other to leash the dog and grab its carrier, rehearsed together once as a family.',
+        tip:'Keep a pet emergency kit (leash, a few days of food, basic records) packed and ready alongside the household\'s general emergency supplies.' },
+
+      { id:'pb76', num:'PB76', risk:'medium', title:'A Trusted, Vetted Pet Sitter or Boarding Option Arranged in Advance',
+        who:'All household pets',
+        what:'No established, trusted pet care arrangement in place before it is urgently needed',
+        where:'Applies to any time the household needs pet care coverage away from home',
+        why:'Having a known, trusted option arranged in advance avoids a stressful last-minute search exactly when the household may already be stretched thin with a young baby',
+        how:'Research and establish a relationship with a trusted pet sitter or boarding option well before it is needed, including a trial stay or visit if possible',
+        measurement:'Recognised pet-care guidance recommends establishing a trusted care provider in advance of need, including a trial period to confirm fit for the specific pet.',
+        example:'A family arranges a trial half-day stay with a potential pet sitter months before their first planned trip away with the new baby, confirming the fit works well for their dog.',
+        tip:'Keep the pet sitter or boarding provider\'s contact details, along with the pet\'s care instructions, in the same place as the household\'s other emergency information.' },
+
+      { id:'pb77', num:'PB77', risk:'medium', title:'Maintaining Pet Identification With Current Contact Details',
+        who:'All household pets',
+        what:'Microchip registration or ID tag contact details that are outdated, especially after a house move or change of phone number',
+        where:'Applies to the pet\'s microchip registration and physical ID tag',
+        why:'A busier household with a new baby increases the chance of a door left open a moment longer than usual, making reliable, current identification more important than ever',
+        how:'Check and update microchip registration details and ID tags whenever contact information changes, and confirm they are current at each veterinary visit',
+        measurement:'AVMA guidance recommends keeping microchip registration and ID tag information current at all times, checked as part of routine veterinary visits.',
+        example:'A family updates their dog\'s microchip registration with a new address and phone number the same week they move house, rather than assuming to do it "eventually."',
+        tip:'Ask the veterinary practice to confirm microchip registration details are current at every routine visit — it takes a moment and closes a common gap.' },
+
+      { id:'pb78', num:'PB78', risk:'low', title:'Planning and Budgeting for Ongoing Pet Care Alongside Baby Expenses',
+        who:'The whole household',
+        what:'Ongoing pet care costs not planned for alongside the household\'s growing baby-related expenses',
+        where:'Applies to household financial planning',
+        why:'Unplanned costs can lead to delayed veterinary care or corners cut on preventive care, both of which affect the pet\'s wellbeing and, indirectly, household safety',
+        how:'Include ongoing pet care — food, preventive care, grooming, and an allowance for unexpected veterinary costs — as a specific line in household planning alongside baby-related expenses',
+        measurement:'Recognised household-budgeting guidance for pet owners recommends planning for both routine and unexpected pet care costs as an ongoing, rather than occasional, expense category.',
+        example:'A household sets aside a small, regular amount specifically for the dog\'s ongoing care needs, reviewed alongside their baby budget rather than treated as an afterthought.',
+        tip:'A modest ongoing pet-care fund, even a small and simple one, reduces the chance of delaying a needed veterinary visit due to unexpected cost.' },
+
+      { id:'pb79', num:'PB79', risk:'medium', title:'Revisiting the Household\'s Pet-Baby Plan as Baby Grows Into Toddlerhood',
+        who:'The whole household',
+        what:'The original pet-baby household plan left unchanged as the baby grows through infancy into toddlerhood and beyond',
+        where:'Applies to the whole household\'s ongoing approach to pet-child safety',
+        why:'A plan built for a newborn will not automatically stay appropriate for a walking, talking, increasingly independent toddler — needs and risks shift considerably over this period',
+        how:'Set a regular, recurring point to revisit and update the household\'s pet-baby safety plan as the child grows, rather than treating the original plan as fixed',
+        measurement:'Recognised guidance for pet-child household safety recommends periodic review of household rules and supervision levels at each major developmental milestone.',
+        example:'A family reviews their entire pet-baby plan together at each of their child\'s milestone check-ups, updating rules as the child\'s abilities and interests change.',
+        tip:'Tie the review to an existing recurring event, like a paediatric check-up, so it happens reliably rather than only after something prompts it.' },
+
+      { id:'pb80', num:'PB80', risk:'high', title:'Recognising When Professional Behaviour Support Is Needed, and Seeking It Early',
+        who:'All household pets showing a persistent or concerning behaviour pattern',
+        what:'A behaviour concern that keeps recurring or worsening, addressed informally within the household rather than with professional support',
+        where:'Applies to any ongoing behaviour concern in the home',
+        why:'Early professional input generally offers far more effective options than waiting until a pattern has become deeply established, and a qualified professional can assess safety risk more accurately than general household guidance alone',
+        how:'Contact a veterinarian or qualified animal behaviourist promptly at the first sign of a persistent or escalating behaviour concern, rather than waiting to see if it resolves on its own',
+        measurement:'AVMA guidance recommends prompt professional behavioural assessment for any persistent or escalating concern, since early intervention is consistently more effective than delayed intervention.',
+        example:'A family seeks a referral to a qualified veterinary behaviourist as soon as their dog\'s mild wariness around the toddler shows signs of becoming more pronounced, rather than hoping it will pass.',
+        tip:'A veterinarian can usually provide a referral to a qualified behaviourist — this is a normal, common request, not an overreaction.' },
+
+      { id:'pb81', num:'PB81', risk:'medium', title:'Consistent Household Rules Across All Caregivers',
+        who:'Parents, grandparents, nannies, babysitters and any other regular caregiver',
+        what:'Pet-baby household rules that differ depending on which caregiver is present',
+        where:'Applies to every caregiving arrangement involving pets and baby',
+        why:'A pet and a growing child both learn fastest from consistency, and rules that change depending on who is supervising create confusion and undermine the safety habits the household has worked to build',
+        how:'Write down the household\'s core pet-baby rules and share them clearly with every regular caregiver, asking them to follow the same standard the parents do',
+        measurement:'Recognised guidance for consistent household safety practices recommends a shared, written set of rules communicated to every caregiver, rather than rules known only informally by the parents.',
+        example:'A simple written pet-baby rules sheet is given to a new nanny during onboarding, covering supervision expectations, feeding-time separation, and the nursery access rule.',
+        tip:'Revisit the written rules with caregivers occasionally, not just once at the start — a quick refresh keeps everyone aligned as the child grows.' },
+
+      { id:'pb82', num:'PB82', risk:'medium', title:'A Careful, Gradual Introduction Timeline for Any New Pet Added After Baby',
+        who:'The household considering adding a new pet after the baby has arrived',
+        what:'A new pet brought into the home on a compressed timeline, without the same careful preparation given to the original pet-baby introduction',
+        where:'Applies to the whole household during any future pet addition',
+        why:'The careful, gradual introduction process used before baby arrived is just as relevant, if not more so, when adding a new pet into a home that now includes a mobile child',
+        how:'If considering a new pet, defer the decision until the household has capacity to manage a proper introduction process, and apply the same gradual, supervised approach used originally',
+        measurement:'Recognised veterinary behaviour guidance recommends applying the same structured introduction principles for any new pet added to a household that already includes young children.',
+        example:'A family that wants to add a puppy waits until their toddler\'s current routine is well-established, then applies the same gradual introduction plan used with their first pet.',
+        tip:'A busy, high-transition period (a house move, a second baby on the way) is generally not the right time to also introduce a new pet — timing matters as much as the process itself.' },
+
+      { id:'pb83', num:'PB83', risk:'high', title:'Emergency Veterinary and Poison Control Information Kept Accessible',
+        who:'The whole household',
+        what:'No readily accessible information for what to do or who to contact in a pet-related medical emergency',
+        where:'Kept somewhere visible and accessible, such as with the household\'s other emergency information',
+        why:'In a genuine emergency, having key information already gathered and accessible saves valuable time compared to searching for it under pressure',
+        how:'Keep the veterinary practice\'s details, the nearest emergency veterinary clinic, and animal poison control information together with the household\'s other emergency contacts, using the cheat sheet in this checklist as a starting point',
+        measurement:'AVMA guidance recommends keeping emergency veterinary contact information readily accessible at all times, reviewed and updated periodically.',
+        example:'A household adds their emergency veterinary clinic\'s details to the same card kept for the baby\'s paediatrician and other emergency contacts.',
+        tip:'Use this module\'s cheat sheet to record these details once, so they are ready and printed rather than scattered across different notes.' },
+
+      { id:'pb84', num:'PB84', risk:'low', title:'Recognising and Reinforcing the Positive Value of the Human-Animal Bond',
+        who:'The whole household',
+        what:'A household so focused on managing risk that the genuine, well-documented benefits of growing up with a pet go unacknowledged',
+        where:'Applies to the household\'s overall approach and outlook',
+        why:'Pets bring real companionship, comfort, and developmental benefit to family life, and this checklist exists to support that bond through good habits, not to suggest pets are something to be feared',
+        how:'Make space to enjoy calm, positive, well-supervised moments between pet and child regularly, recognising these as the goal that all the household\'s careful preparation is there to protect',
+        measurement:'Recognised paediatric and veterinary guidance describes a well-managed pet-child relationship as offering genuine companionship and developmental benefit, alongside the need for sensible supervision.',
+        example:'A family takes a moment to appreciate a calm, supervised evening where their toddler and dog settle together quietly on the rug, exactly the kind of relationship their preparation was built to support.',
+        tip:'Good habits and a warm, loving relationship between your child and your pet are not in tension with each other — the checklist is here to help you enjoy both, fully and confidently.' }
+    ]
+  }
+];
+
+const STORE_KEY = 'safelife-newpetbaby-pro';
+const completed = new Set();
+let lang = 'en', theme = 'caramel', mode = 'light', riskFilter = null, activeZone = 1;
+const TOTAL = 84;
+
+function t(key){ return (I18N[lang] && I18N[lang][key]) || I18N.en[key] || key; }
+function persist(){
+  try{ localStorage.setItem(STORE_KEY, JSON.stringify({completed:[...completed], lang, theme, mode})); }catch(e){}
+}
+function restore(){
+  try{
+    const raw = localStorage.getItem(STORE_KEY);
+    if(!raw) return;
+    const d = JSON.parse(raw);
+    (d.completed||[]).forEach(id=>completed.add(id));
+    if(false && d.lang && I18N[d.lang]) lang = d.lang; /* language switching disabled for English-only release — remove "false &&" to re-enable */
+    if(d.theme) theme = d.theme;
+    if(d.mode) mode = d.mode;
+  }catch(e){}
+}
+
+// ═══════════════════════════════════════════
+// PROGRESS & STATS
+// ═══════════════════════════════════════════
+function updateProgress(){
+  const done = completed.size;
+  document.getElementById('topbar-done').textContent = done;
+  document.getElementById('progress-count').textContent = done + ' ' + t('ofWord') + ' ' + TOTAL;
+  document.getElementById('progress-fill').style.width = (done/TOTAL*100) + '%';
+  ZONES.forEach(z=>{
+    const zDone = z.checks.filter(c=>completed.has(c.id)).length;
+    document.getElementById('ztc-'+z.id).textContent = zDone + '/14';
+  });
+  document.getElementById('celebrate').classList.toggle('show', done === TOTAL);
+  persist();
+}
+function fillStats(){
+  const counts = {critical:0,high:0,medium:0,low:0};
+  ZONES.forEach(z=>z.checks.forEach(c=>counts[c.risk]++));
+  ['critical','high','medium','low'].forEach(r=>{ document.getElementById('s-'+r).textContent = counts[r]; });
+}
+
+// ═══════════════════════════════════════════
+// RENDER
+// ═══════════════════════════════════════════
+function buildCard(check){
+  const card = document.createElement('div');
+  card.className = 'check-card' + (completed.has(check.id) ? ' completed' : '');
+  card.dataset.id = check.id;
+  card.dataset.risk = check.risk;
+  card.innerHTML =
+    '<div class="check-header">' +
+      '<div class="check-checkbox">' + (completed.has(check.id) ? '✓' : '') + '</div>' +
+      '<div class="check-num">' + check.num + '</div>' +
+      '<div class="check-risk risk-' + check.risk + '">' + t(check.risk) + '</div>' +
+      '<div class="check-title">' + check.title + '</div>' +
+      '<div class="check-chevron">▼</div>' +
+    '</div>' +
+    '<div class="check-detail">' +
+      '<div class="detail-grid">' +
+        '<div class="detail-item"><div class="detail-label"><span>👤</span>' + t('who') + '</div><div class="detail-value">' + check.who + '</div></div>' +
+        '<div class="detail-item"><div class="detail-label"><span>⚠️</span>' + t('what') + '</div><div class="detail-value">' + check.what + '</div></div>' +
+        '<div class="detail-item"><div class="detail-label"><span>📍</span>' + t('where') + '</div><div class="detail-value">' + check.where + '</div></div>' +
+        '<div class="detail-item"><div class="detail-label"><span>❓</span>' + t('why') + '</div><div class="detail-value">' + check.why + '</div></div>' +
+        '<div class="detail-item full"><div class="detail-label"><span>🔧</span>' + t('how') + '</div><div class="detail-value">' + check.how + '</div></div>' +
+      '</div>' +
+      '<div class="measurement-box"><strong>📏 ' + t('standards') + '</strong>' + check.measurement + '</div>' +
+      '<div class="detail-item full" style="margin-top:10px;"><div class="detail-label"><span>💬</span>' + t('example') + '</div><div class="detail-value">' + check.example + '</div></div>' +
+      '<div class="tip-box"><span class="tip-icon">💡</span><span class="tip-text"><strong>' + t('quickTip') + ':</strong> ' + check.tip + '</span></div>' +
+    '</div>';
+  card.querySelector('.check-header').addEventListener('click', function(){ card.classList.toggle('open'); });
+  card.querySelector('.check-checkbox').addEventListener('click', function(e){
+    e.stopPropagation();
+    if(completed.has(check.id)){ completed.delete(check.id); card.classList.remove('completed'); this.textContent=''; }
+    else { completed.add(check.id); card.classList.add('completed'); this.textContent='✓'; }
+    updateProgress();
+  });
+  return card;
+}
+
+function renderAll(){
+  document.querySelectorAll('.zone-panel').forEach(p=>p.remove());
+  const main = document.getElementById('main-content');
+  ZONES.forEach(z=>{
+    const panel = document.createElement('div');
+    panel.className = 'zone-panel' + (z.id === activeZone ? ' active' : '');
+    panel.id = 'zone-panel-' + z.id;
+    const header = document.createElement('div');
+    header.className = 'zone-header';
+    header.innerHTML = '<div class="zone-icon">' + (ICONS['z'+z.id] || z.icon) + '</div><div class="zone-header-text"><h2>' + t('z'+z.id) + '</h2><p>' + t('zd'+z.id) + '</p></div>';
+    panel.appendChild(header);
+    const actions = document.createElement('div');
+    actions.className = 'zone-actions';
+    const bExpand = document.createElement('button'); bExpand.className='btn btn-outline'; bExpand.textContent=t('expandAll');
+    const bCollapse = document.createElement('button'); bCollapse.className='btn btn-outline'; bCollapse.textContent=t('collapseAll');
+    const bUnmark = document.createElement('button'); bUnmark.className='btn btn-outline'; bUnmark.textContent=t('unmarkAll');
+    const bMark = document.createElement('button'); bMark.className='btn btn-primary'; bMark.textContent=t('markAll');
+    actions.append(bExpand,bCollapse,bUnmark,bMark);
+    panel.appendChild(actions);
+    const list = document.createElement('div');
+    list.className = 'checks-list';
+    z.checks.forEach(c=>list.appendChild(buildCard(c)));
+    panel.appendChild(list);
+    const disc = document.createElement('div');
+    disc.className = 'zone-disclaimer';
+    disc.textContent = '⚕ ' + t('disclaimer');
+    panel.appendChild(disc);
+    bExpand.addEventListener('click', ()=>list.querySelectorAll('.check-card').forEach(c=>c.classList.add('open')));
+    bCollapse.addEventListener('click', ()=>list.querySelectorAll('.check-card').forEach(c=>c.classList.remove('open')));
+    bMark.addEventListener('click', ()=>{ z.checks.forEach(c=>completed.add(c.id)); refreshCards(list); });
+    bUnmark.addEventListener('click', ()=>{ z.checks.forEach(c=>completed.delete(c.id)); refreshCards(list); });
+    main.appendChild(panel);
+  });
+  applyFilters();
+  updateProgress();
+}
+function refreshCards(list){
+  list.querySelectorAll('.check-card').forEach(card=>{
+    const done = completed.has(card.dataset.id);
+    card.classList.toggle('completed', done);
+    card.querySelector('.check-checkbox').textContent = done ? '✓' : '';
+  });
+  updateProgress();
+}
+
+// ═══════════════════════════════════════════
+// ZONES / SEARCH / FILTERS
+// ═══════════════════════════════════════════
+function switchZone(id){
+  activeZone = id;
+  document.querySelectorAll('.zone-tab').forEach(tab=>tab.classList.toggle('active', +tab.dataset.zone === id));
+  document.querySelectorAll('.zone-panel').forEach(p=>p.classList.toggle('active', p.id === 'zone-panel-' + id));
+}
+document.querySelectorAll('.zone-tab').forEach(tab=>{
+  tab.addEventListener('click', ()=>{ document.getElementById('search-input').value=''; applyFilters(); switchZone(+tab.dataset.zone); });
+});
+document.querySelectorAll('.hero-badge[data-zone]').forEach(badge=>{
+  badge.addEventListener('click', ()=>{
+    switchZone(+badge.dataset.zone);
+    document.getElementById('zone-tabs').scrollIntoView({behavior:'smooth'});
+  });
+});
+document.querySelectorAll('.stat-pill[data-risk]').forEach(pill=>{
+  pill.addEventListener('click', ()=>{
+    riskFilter = (riskFilter === pill.dataset.risk) ? null : pill.dataset.risk;
+    document.querySelectorAll('.stat-pill[data-risk]').forEach(p=>p.classList.toggle('filter-on', p.dataset.risk === riskFilter));
+    applyFilters();
+  });
+});
+document.getElementById('search-input').addEventListener('input', applyFilters);
+
+function applyFilters(){
+  const q = document.getElementById('search-input').value.trim().toLowerCase();
+  const searching = q.length > 0;
+  let anyVisible = false;
+  ZONES.forEach(z=>{
+    const panel = document.getElementById('zone-panel-' + z.id);
+    if(!panel) return;
+    let zoneVisible = 0;
+    panel.querySelectorAll('.check-card').forEach(card=>{
+      const check = z.checks.find(c=>c.id === card.dataset.id);
+      const text = (check.title+' '+check.who+' '+check.what+' '+check.where+' '+check.why+' '+check.how+' '+check.measurement+' '+check.example+' '+check.tip).toLowerCase();
+      const matchQ = !searching || text.includes(q);
+      const matchR = !riskFilter || check.risk === riskFilter;
+      const show = matchQ && matchR;
+      card.style.display = show ? '' : 'none';
+      if(show) zoneVisible++;
+    });
+    if(searching || riskFilter){
+      panel.classList.toggle('active', zoneVisible > 0);
+      panel.querySelector('.zone-actions').style.display = 'none';
+    } else {
+      panel.classList.toggle('active', z.id === activeZone);
+      panel.querySelector('.zone-actions').style.display = '';
+    }
+    if(zoneVisible > 0) anyVisible = true;
+  });
+  document.getElementById('search-no-results').style.display = (searching || riskFilter) && !anyVisible ? 'block' : 'none';
+}
+
+// ═══════════════════════════════════════════
+// THEMES / MODE / LANGUAGE
+// ═══════════════════════════════════════════
+const THEMES = [
+  {id:'caramel', name:'Caramel Warmth', c:'#A9784F'},
+  {id:'teal',   name:'Teal Calm',     c:'#14B8A6'},
+  {id:'amber',  name:'Warm Amber',    c:'#F59E0B'},
+  {id:'rose',   name:'Rose Care',     c:'#E11D48'},
+  {id:'violet', name:'Gentle Violet', c:'#7C3AED'},
+  {id:'ocean',  name:'Ocean Blue',    c:'#2563EB'},
+  {id:'forest', name:'Forest Green',  c:'#16A34A'}
+];
+function buildThemeMenu(){
+  const dd = document.getElementById('dd-theme');
+  dd.innerHTML = '<div class="dropdown-title">' + t('theme') + '</div>';
+  THEMES.forEach(th=>{
+    const row = document.createElement('button');
+    row.className = 'theme-row' + (th.id === theme ? ' selected' : '');
+    row.innerHTML = '<span class="theme-swatch" style="background:' + th.c + '"></span>' + th.name + (th.id === theme ? '<span class="check-mark">✓</span>' : '');
+    row.addEventListener('click', e=>{
+      e.stopPropagation();
+      theme = th.id;
+      document.body.dataset.theme = theme;
+      buildThemeMenu(); persist();
+    });
+    dd.appendChild(row);
+  });
+}
+function buildLangMenu(){
+  const dd = document.getElementById('dd-lang');
+  dd.innerHTML = '<div class="dropdown-title">🌐 Language</div>';
+  Object.keys(I18N).forEach(code=>{
+    const row = document.createElement('button');
+    row.className = 'theme-row' + (code === lang ? ' selected' : '');
+    row.innerHTML = '<span style="font-weight:800;font-size:11px;color:var(--accent);min-width:22px;">' + code.toUpperCase() + '</span>' + I18N[code].name + (code === lang ? '<span class="check-mark">✓</span>' : '');
+    row.addEventListener('click', e=>{
+      e.stopPropagation();
+      lang = code;
+      applyLang(); renderAll(); buildLangMenu(); buildManual(); buildCheat(); buildCollection(); persist();
+    });
+    dd.appendChild(row);
+  });
+  const note = document.createElement('div');
+  note.style.cssText = 'font-size:10.5px;color:var(--ink-soft);padding:8px;max-width:230px;line-height:1.4;';
+  note.textContent = t('langNote');
+  dd.appendChild(note);
+}
+function applyLang(){
+  document.querySelectorAll('[data-i18n]').forEach(el=>{ el.innerHTML = t(el.dataset.i18n); });
+  document.getElementById('search-input').placeholder = t('searchPh');
+  document.getElementById('lang-label').textContent = lang.toUpperCase();
+  document.documentElement.dir = (lang === 'ar') ? 'rtl' : 'ltr';
+  document.documentElement.lang = lang;
+}
+function toggleDropdown(id, e){
+  e.stopPropagation();
+  const dd = document.getElementById(id);
+  const wasOpen = dd.classList.contains('open');
+  document.querySelectorAll('.dropdown').forEach(d=>d.classList.remove('open'));
+  if(!wasOpen) dd.classList.add('open');
+}
+document.getElementById('btn-theme').addEventListener('click', e=>toggleDropdown('dd-theme', e));
+document.getElementById('btn-lang').addEventListener('click', e=>toggleDropdown('dd-lang', e));
+document.addEventListener('click', ()=>document.querySelectorAll('.dropdown').forEach(d=>d.classList.remove('open')));
+document.getElementById('btn-mode').addEventListener('click', function(){
+  mode = mode === 'light' ? 'dark' : 'light';
+  document.body.dataset.mode = mode;
+  this.textContent = mode === 'light' ? '🌙' : '☀️';
+  persist();
+});
+
+// ═══════════════════════════════════════════
+// SAVE / LOAD PROGRESS
+// ═══════════════════════════════════════════
+document.getElementById('btn-save').addEventListener('click', ()=>{
+  const data = { product:'SafeLife', module:'newpetbaby', version:1, savedAt:new Date().toISOString(), completed:[...completed], lang, theme, mode };
+  const blob = new Blob([JSON.stringify(data, null, 2)], {type:'application/json'});
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = 'SafeLife_NewPetBaby_Progress_' + new Date().toISOString().slice(0,10) + '.json';
+  a.click();
+  URL.revokeObjectURL(a.href);
+});
+document.getElementById('btn-load').addEventListener('click', ()=>document.getElementById('load-file').click());
+document.getElementById('load-file').addEventListener('change', function(){
+  const file = this.files[0]; if(!file) return;
+  const reader = new FileReader();
+  reader.onload = ()=>{
+    try{
+      const d = JSON.parse(reader.result);
+      if(d.module !== 'newpetbaby' && !confirm('This file was saved from a different module. Load anyway?')) return;
+      completed.clear();
+      (d.completed||[]).forEach(id=>completed.add(id));
+      if(false && d.lang && I18N[d.lang]) lang = d.lang; /* language switching disabled for English-only release — remove "false &&" to re-enable */
+      if(d.theme) theme = d.theme;
+      if(d.mode) mode = d.mode;
+      document.body.dataset.theme = theme;
+      document.body.dataset.mode = mode;
+      document.getElementById('btn-mode').textContent = mode === 'light' ? '🌙' : '☀️';
+      applyLang(); renderAll(); buildThemeMenu(); buildLangMenu(); persist();
+    }catch(e){ alert('Could not read that file — is it a SafeLife progress file?'); }
+  };
+  reader.readAsText(file);
+  this.value = '';
+});
+
+// ═══════════════════════════════════════════
+// MODALS / PRINT / NAV
+// ═══════════════════════════════════════════
+function openModal(id){ document.getElementById(id).classList.add('open'); }
+function closeModal(id){ document.getElementById(id).classList.remove('open'); }
+document.querySelectorAll('.modal-close').forEach(b=>b.addEventListener('click', ()=>closeModal(b.dataset.close)));
+document.querySelectorAll('.modal-overlay').forEach(o=>o.addEventListener('click', e=>{ if(e.target === o) o.classList.remove('open'); }));
+document.getElementById('btn-manual').addEventListener('click', ()=>openModal('modal-manual'));
+document.getElementById('btn-cheat').addEventListener('click', ()=>openModal('modal-cheat'));
+document.getElementById('btn-print').addEventListener('click', ()=>openModal('modal-print'));
+document.getElementById('btn-search').addEventListener('click', ()=>{
+  const s = document.getElementById('search-input');
+  s.scrollIntoView({behavior:'smooth', block:'center'});
+  setTimeout(()=>s.focus(), 350);
+});
+
+function doPrint(cls){
+  document.querySelectorAll('.modal-overlay').forEach(o=>o.classList.remove('open'));
+  const wasOpen = new Set([...document.querySelectorAll('.check-card.open')]);
+  document.querySelectorAll('.check-card').forEach(c=>c.classList.add('open'));
+  if(cls) document.body.classList.add(cls);
+  const cleanup = ()=>{
+    document.body.classList.remove('print-zone','print-cheat');
+    document.querySelectorAll('.check-card').forEach(c=>{ if(!wasOpen.has(c)) c.classList.remove('open'); });
+    window.removeEventListener('afterprint', cleanup);
+  };
+  window.addEventListener('afterprint', cleanup);
+  setTimeout(()=>window.print(), 60);
+}
+document.getElementById('print-all').addEventListener('click', ()=>doPrint(null));
+document.getElementById('print-zone').addEventListener('click', ()=>doPrint('print-zone'));
+document.getElementById('print-cheat2').addEventListener('click', ()=>doPrint('print-cheat'));
+document.getElementById('btn-print-cheat').addEventListener('click', ()=>doPrint('print-cheat'));
+
+function visibleCards(){
+  return [...document.querySelectorAll('.zone-panel.active .check-card')].filter(c=>c.style.display !== 'none');
+}
+function nearestCardIx(cards){
+  const mark = window.innerHeight * 0.35;
+  let best = 0, bestDist = Infinity;
+  cards.forEach((c, i)=>{
+    const d = Math.abs(c.getBoundingClientRect().top - mark);
+    if(d < bestDist){ bestDist = d; best = i; }
+  });
+  return best;
+}
+function goToCard(cards, ix){
+  if(ix < 0){ window.scrollTo({top:0, behavior:'smooth'}); return; }
+  if(ix > cards.length - 1) ix = cards.length - 1;
+  const y = cards[ix].getBoundingClientRect().top + window.scrollY - window.innerHeight * 0.35;
+  window.scrollTo({top: Math.max(0, y), behavior:'smooth'});
+}
+document.getElementById('fn-top').addEventListener('click', ()=>window.scrollTo({top:0, behavior:'smooth'}));
+document.getElementById('fn-next').addEventListener('click', ()=>{
+  const cards = visibleCards(); if(!cards.length) return;
+  goToCard(cards, nearestCardIx(cards) + 1);
+});
+document.getElementById('fn-prev').addEventListener('click', ()=>{
+  const cards = visibleCards(); if(!cards.length) return;
+  goToCard(cards, nearestCardIx(cards) - 1);
+});
+
+// ═══════════════════════════════════════════
+// MANUAL / CHEAT SHEET / COLLECTION
+// ═══════════════════════════════════════════
+function buildManual(){
+  document.getElementById('manual-body').innerHTML =
+    t('manualBody') +
+    '<h4>⚕</h4><p>' + t('disclaimer') + ' ' + t('langNote') + '</p>';
+}
+
+const GOLDEN_RULES = [
+  'Never leave a baby or young child and a pet alone together, at any age, even for a moment',
+  'Introduce a newborn to pets calmly and gradually, and never force direct nose-to-face contact under any circumstances',
+  'Learn to read canine and feline stress signals, and treat any of them as an immediate cue to give the pet space',
+  'Always give a pet a way to retreat and observe, and never corner or restrain one near the baby',
+  'Wash hands after any pet contact and before touching the baby, bottles, or feeding equipment',
+  'Keep litter boxes scooped daily and away from food and baby areas; pregnant or immunocompromised household members should discuss toxoplasmosis specifically with their own healthcare provider',
+  'Never allow unsupervised pet access to the crib or bassinet, with no exceptions',
+  'Watch closely for resource guarding around food, toys or resting spots, and seek professional help promptly if it appears',
+  'Teach gentle touch early, and never let a child approach a pet that is eating or sleeping',
+  'Honour any signal that a pet wants space immediately — walking away, growling, or retreating — rather than pushing the interaction further'
+];
+const KEY_NUMBERS = [
+  ['Litter box scooping frequency','at least daily — CDC guidance on toxoplasmosis prevention'],
+  ['Hand washing after pet contact','soap and water for at least 20 seconds, before touching the baby — CDC/WHO hand hygiene guidance'],
+  ['Deworming and parasite prevention','a year-round, veterinarian-guided schedule — AVMA/CDC guidance'],
+  ['Flea and tick prevention','maintained year-round rather than seasonally — AVMA guidance'],
+  ['Veterinary wellness visit frequency','at least annually for adult pets, more often for puppies, kittens, seniors or ongoing conditions — AVMA guidance'],
+  ['Nail trimming frequency','approximately every few weeks, depending on the individual pet — recognised veterinary guidance'],
+  ['Pet waste removal from outdoor play areas','promptly, generally within a day — CDC guidance on parasite prevention'],
+  ['Unsupervised pet access to crib/bassinet','never, with no exceptions — AVMA and recognised paediatric safe-sleep guidance'],
+  ['Toxoplasmosis precaution for pregnant/immunocompromised members','avoid litter box cleaning where possible; if unavoidable, wear gloves and wash hands thoroughly — CDC/WHO guidance, discuss individually with a healthcare provider'],
+  ['Supervision level once baby is mobile','constant, active, within-reach adult supervision — recognised paediatric and veterinary behaviour guidance'],
+  ['Response to any pet stress signal','immediate — increase distance and end the interaction without delay'],
+  ['Response to a growl, hiss or guarding signal','never punish it; give space immediately and consult a veterinarian or behaviourist'],
+  ['Pet bowl cleaning frequency','daily, with hot soapy water, kept separate from baby feeding areas — recognised food-hygiene guidance'],
+  ['Introduction pace for a new pet after baby arrives','the same gradual, structured process used for the original introduction — recognised veterinary behaviour guidance']
+];
+
+const CONTACTS_KEY = 'safelife-newpetbaby-contacts';
+const DEFAULT_CONTACTS = [
+  ['Emergency services',''],
+  ['GP / family doctor',''],
+  ['Pediatrician',''],
+  ['Veterinarian',''],
+  ['Emergency veterinary clinic',''],
+  ['Animal poison control',''],
+  ['Animal behaviourist / trainer',''],
+  ['Backup caregiver / pet sitter','']
+];
+let contacts;
+try{
+  const raw = localStorage.getItem(CONTACTS_KEY);
+  contacts = raw ? JSON.parse(raw) : null;
+}catch(e){ contacts = null; }
+if(!contacts || !Array.isArray(contacts.list)) contacts = { list: DEFAULT_CONTACTS.map(c=>c.slice()), notes:'' };
+function saveContacts(){
+  try{ localStorage.setItem(CONTACTS_KEY, JSON.stringify(contacts)); }catch(e){}
+  buildCheatPrint();
+}
+function buildCheat(){
+  const body = document.getElementById('cheat-body');
+  const rules = GOLDEN_RULES.map(r=>'<li>' + r + '</li>').join('');
+  const nums = KEY_NUMBERS.map(n=>'<tr><td><strong>' + n[0] + '</strong></td><td>' + n[1] + '</td></tr>').join('');
+  body.innerHTML =
+    '<h4>📞 ' + t('cheatContacts') + '</h4>' +
+    '<p style="font-size:12px;color:var(--ink-soft);margin-bottom:8px;">' + t('cheatHint') + '</p>' +
+    '<div id="contact-rows"></div>' +
+    '<button class="btn btn-outline" id="add-contact" style="margin:8px 0 4px;">' + t('addContact') + '</button>' +
+    '<h4>⭐ ' + t('rules') + '</h4><ul class="rule-list">' + rules + '</ul>' +
+    '<h4>📏 ' + t('keyNums') + '</h4><table><tr><th>Check</th><th>Safe value / standard</th></tr>' + nums + '</table>' +
+    '<h4>📝 ' + t('myNotes') + '</h4>' +
+    '<textarea id="cheat-notes" placeholder="' + t('notesPh') + '" style="width:100%;min-height:80px;border:1px solid var(--line);border-radius:8px;background:var(--tile);color:var(--ink);padding:10px 12px;font-family:\'Inter\',sans-serif;font-size:13px;resize:vertical;"></textarea>';
+  renderContactRows();
+  const notesEl = document.getElementById('cheat-notes');
+  notesEl.value = contacts.notes || '';
+  notesEl.addEventListener('input', function(){ contacts.notes = this.value; saveContacts(); });
+  document.getElementById('add-contact').addEventListener('click', function(){
+    contacts.list.push(['','']);
+    renderContactRows(); saveContacts();
+    const rows = document.querySelectorAll('#contact-rows .c-name');
+    rows[rows.length-1].focus();
+  });
+  buildCheatPrint();
+}
+function renderContactRows(){
+  const wrap = document.getElementById('contact-rows');
+  if(!wrap) return;
+  wrap.innerHTML = '';
+  const inputCss = 'border:1px solid var(--line);border-radius:8px;background:var(--tile);color:var(--ink);padding:8px 10px;font-family:\'Inter\',sans-serif;font-size:13px;';
+  contacts.list.forEach((c, ix)=>{
+    const row = document.createElement('div');
+    row.style.cssText = 'display:flex;gap:6px;margin-bottom:6px;align-items:center;';
+    const name = document.createElement('input');
+    name.className = 'c-name'; name.type = 'text'; name.value = c[0];
+    name.placeholder = 'Name / service'; name.style.cssText = inputCss + 'flex:1.4;min-width:0;';
+    const num = document.createElement('input');
+    num.type = 'text'; num.value = c[1];
+    num.placeholder = '+ number'; num.style.cssText = inputCss + 'flex:1;min-width:0;font-weight:700;';
+    const del = document.createElement('button');
+    del.textContent = '✕'; del.title = t('delRow');
+    del.style.cssText = 'border:1px solid var(--line);background:var(--surface);color:var(--ink-soft);border-radius:8px;width:30px;height:34px;cursor:pointer;flex-shrink:0;';
+    name.addEventListener('input', function(){ contacts.list[ix][0] = this.value; saveContacts(); });
+    num.addEventListener('input', function(){ contacts.list[ix][1] = this.value; saveContacts(); });
+    del.addEventListener('click', function(){ contacts.list.splice(ix,1); renderContactRows(); saveContacts(); });
+    row.append(name, num, del);
+    wrap.appendChild(row);
+  });
+}
+function buildCheatPrint(){
+  const esc = s => String(s).replace(/</g,'&lt;');
+  const rules = GOLDEN_RULES.map(r=>'<li>' + r + '</li>').join('');
+  const nums = KEY_NUMBERS.map(n=>'<tr><td><strong>' + n[0] + '</strong></td><td>' + n[1] + '</td></tr>').join('');
+  const filled = contacts.list.filter(c=>c[0] || c[1]);
+  const chips = filled.map(h=>'<div class="cp-chip"><b>' + esc(h[0]||'—') + '</b><span>' + (esc(h[1]) || '____________') + '</span></div>').join('');
+  const activeQR = getSavedQR() || QR_IMAGE;
+  const qr = activeQR
+    ? '<img src="' + activeQR + '" alt="QR">'
+    : '<div class="qr-ph">' + (STORE_URL ? esc(STORE_URL) : 'Your QR<br>code here') + '</div>';
+  document.getElementById('cheat-print').innerHTML =
+    '<div class="cp-card">' +
+      '<div class="cp-head">' + ICONS.stage +
+        '<div><div class="cp-title">Safe<em>Life</em></div>' +
+        '<div class="cp-sub">' + t('cheatTitle') + ' · ' + t('heroTitle') + '</div></div>' +
+        '<div class="cp-tag">"To all moms by a mom"<br>NEBOSH &amp; OSHA trained HSE professional</div>' +
+      '</div>' +
+      '<div class="cp-contacts">' + chips + '</div>' +
+      '<div class="cp-cols">' +
+        '<div class="cp-rules"><h3>⭐ ' + t('rules') + '</h3><ul>' + rules + '</ul></div>' +
+        '<div class="cp-numsec"><h3>📏 ' + t('keyNums') + '</h3><table>' + nums + '</table></div>' +
+      '</div>' +
+      (contacts.notes ? '<div class="cp-notes"><b>' + t('myNotes') + '</b>' + esc(contacts.notes) + '</div>' : '') +
+      '<div class="cp-foot">' +
+        '<div>Made with care by <b>' + BRAND_NAME + '</b> · SafeLife Collection<br>' + t('disclaimer') + '</div>' +
+        '<div class="cp-qr">' + (STORE_URL ? '<div style="font-size:8px;">' + esc(STORE_URL) + '<br>Scan for the full collection</div>' : '') + qr + '</div>' +
+      '</div>' +
+    '</div>';
+}
+
+// ═══════════════════════════════════════════
+// SELLER: per-product QR code, PIN-protected (each file's own STORE_KEY keeps these separate)
+// ═══════════════════════════════════════════
+const QR_KEY = STORE_KEY + '-qr';
+const QR_PIN_KEY = STORE_KEY + '-qrpin';
+function getSavedQR(){ try{ return localStorage.getItem(QR_KEY) || ''; }catch(e){ return ''; } }
+function sellerRenderLocked(){
+  const hasPin = !!localStorage.getItem(QR_PIN_KEY);
+  document.getElementById('seller-body').innerHTML = hasPin
+    ? '<p>Enter your PIN to manage this file\'s QR code.</p><input type="password" inputmode="numeric" maxlength="12" id="seller-pin-input" placeholder="PIN" style="width:100%;padding:10px 12px;border:1px solid var(--line);border-radius:8px;background:var(--tile);color:var(--ink);font-size:15px;letter-spacing:2px;margin-bottom:10px;">'
+      + '<div class="modal-actions"><button class="btn btn-primary" id="seller-unlock">Unlock</button></div>'
+    : '<p>No PIN set yet for this file. Create one now — you\'ll need it to change the QR code later. Every product file keeps its own separate PIN and QR code.</p>'
+      + '<input type="password" inputmode="numeric" maxlength="12" id="seller-pin-new" placeholder="Create a PIN" style="width:100%;padding:10px 12px;border:1px solid var(--line);border-radius:8px;background:var(--tile);color:var(--ink);font-size:15px;letter-spacing:2px;margin-bottom:8px;">'
+      + '<input type="password" inputmode="numeric" maxlength="12" id="seller-pin-confirm" placeholder="Confirm PIN" style="width:100%;padding:10px 12px;border:1px solid var(--line);border-radius:8px;background:var(--tile);color:var(--ink);font-size:15px;letter-spacing:2px;margin-bottom:10px;">'
+      + '<div class="modal-actions"><button class="btn btn-primary" id="seller-setpin">Set PIN</button></div>';
+  if(hasPin){
+    document.getElementById('seller-unlock').addEventListener('click', function(){
+      const val = document.getElementById('seller-pin-input').value;
+      if(val && val === localStorage.getItem(QR_PIN_KEY)) sellerRenderUnlocked();
+      else alert('Incorrect PIN.');
+    });
+  } else {
+    document.getElementById('seller-setpin').addEventListener('click', function(){
+      const a = document.getElementById('seller-pin-new').value, b = document.getElementById('seller-pin-confirm').value;
+      if(!a || a.length < 4){ alert('Use at least 4 digits.'); return; }
+      if(a !== b){ alert('PINs do not match.'); return; }
+      try{ localStorage.setItem(QR_PIN_KEY, a); }catch(e){}
+      sellerRenderUnlocked();
+    });
+  }
+}
+function sellerRenderUnlocked(){
+  const current = getSavedQR();
+  document.getElementById('seller-body').innerHTML =
+    '<p>Upload this product\'s QR code image. It replaces the placeholder on the printed cheat sheet — saved on this device only, separately for every product file.</p>' +
+    (current ? '<img src="' + current + '" style="width:110px;height:110px;border:1px solid var(--line);border-radius:9px;margin-bottom:10px;object-fit:contain;background:#fff;">' : '') +
+    '<input type="file" accept="image/*" id="seller-qr-file" style="margin-bottom:10px;">' +
+    '<div class="modal-actions">' +
+      '<button class="btn btn-outline" id="seller-remove-qr">Remove QR</button>' +
+      '<button class="btn btn-outline" id="seller-change-pin">Change PIN</button>' +
+      '<button class="btn btn-primary" id="seller-done">Done</button>' +
+    '</div>';
+  document.getElementById('seller-qr-file').addEventListener('change', function(e){
+    const file = e.target.files && e.target.files[0]; if(!file) return;
+    const reader = new FileReader();
+    reader.onload = function(ev){
+      try{ localStorage.setItem(QR_KEY, ev.target.result); }catch(e){}
+      buildCheatPrint();
+      sellerRenderUnlocked();
+    };
+    reader.readAsDataURL(file);
+  });
+  document.getElementById('seller-remove-qr').addEventListener('click', function(){
+    try{ localStorage.removeItem(QR_KEY); }catch(e){}
+    buildCheatPrint();
+    sellerRenderUnlocked();
+  });
+  document.getElementById('seller-change-pin').addEventListener('click', function(){
+    try{ localStorage.removeItem(QR_PIN_KEY); }catch(e){}
+    sellerRenderLocked();
+  });
+  document.getElementById('seller-done').addEventListener('click', ()=>closeModal('modal-seller'));
+}
+document.getElementById('btn-seller').addEventListener('click', function(){ sellerRenderLocked(); openModal('modal-seller'); });
+
+const MODULES = [
+  {a:'0–28 Days'},
+  {a:'1–12 Months'},
+  {a:'1–3 Years'},
+  {a:'3–6 Years'},
+  {a:'6–12 Years'},
+  {a:'13–18 Years'},
+  {a:'19–29 Years'},
+  {a:'30–44 Years'},
+  {a:'45–64 Years'},
+  {a:'65–79 Years'},
+  {a:'80–89 Years'},
+  {a:'90+ Years'}
+];
+const MODULE_ICON_IX = [0,0,1,2,3,4,5,6,6,7,7,7];
+const SITUATION_MODULES = [
+  {name:'Pregnancy', sub:'Stage 0', status:'available', emoji:'🤰'},
+  {name:'Postpartum Recovery', sub:'Situation Module', status:'available', emoji:'🌷'},
+  {name:'Grandparent-Proofing', sub:'Situation Module', status:'available', emoji:'👵'},
+  {name:'Autism & Neurodivergent Children', sub:'Situation Module', status:'available', emoji:'♾️'},
+  {name:'Emergency Preparedness', sub:'Situation Module', status:'available', emoji:'🧳'},
+  {name:'Twins & Multiples', sub:'Situation Module', status:'available', emoji:'👯'},
+  {name:'Babysitter/Nanny Handover', sub:'Situation Module', status:'available', emoji:'🗒️'},
+  {name:'Dementia & Alzheimer\'s Care', sub:'Situation Module', status:'available', emoji:'🏠'},
+  {name:'Injury & Post-Surgery Recovery', sub:'Situation Module', status:'available', emoji:'🩹'},
+  {name:'Chronic Conditions Household', sub:'Situation Module', status:'available', emoji:'💊'},
+  {name:'Limited Mobility / Wheelchair', sub:'Situation Module', status:'available', emoji:'♿'},
+  {name:'Visually / Hearing Impaired', sub:'Situation Module', status:'available', emoji:'🦯'},
+  {name:'New Pet + Baby Household', sub:'Situation Module', status:'current', emoji:'🐾'},
+  {name:'The Caregiver\'s Own Safety', sub:'Situation Module', status:'available', emoji:'🤲'},
+  {name:'New Home Move-In Audit', sub:'Situation Module', status:'available', emoji:'🏡'},
+  {name:'Farm & Rural Household', sub:'Situation Module', status:'available', emoji:'🚜'},
+  {name:'Home Office / WFH', sub:'Situation Module', status:'available', emoji:'💻'}
+];
+function buildSituationGrid(){
+  const grid = document.getElementById('situation-grid');
+  if(!grid) return;
+  grid.innerHTML = '';
+  SITUATION_MODULES.forEach(m=>{
+    const card = document.createElement('div');
+    card.className = 'module-card';
+    const tagClass = m.status === 'coming' ? 'coming' : (m.status === 'current' ? 'owned' : 'addon');
+    const tagLabel = m.status === 'coming' ? 'Coming Soon' : (m.status === 'current' ? '✓ Current Module' : 'Available Separately');
+    card.innerHTML = '<span class="m-emoji">' + m.emoji + '</span><span class="m-name">' + m.name + '</span><span class="m-age">' + m.sub + '</span>' +
+      '<span class="module-tag ' + tagClass + '">' + tagLabel + '</span>';
+    grid.appendChild(card);
+  });
+}
+
+function buildCollection(){
+  const grid = document.getElementById('collection-grid');
+  grid.innerHTML = '';
+  MODULES.forEach((m, mi)=>{
+    const card = document.createElement('div');
+    card.className = 'module-card';
+    const iconIx = MODULE_ICON_IX[mi] != null ? MODULE_ICON_IX[mi] : mi;
+    card.innerHTML = '<span class="m-emoji">' + ICONS.stages[iconIx] + '</span><span class="m-name">' + t('mn'+(mi+1)) + '</span><span class="m-age">' + m.a + '</span>' +
+      '<span class="module-tag ' + (m.owned ? 'owned' : 'addon') + '">' + (m.owned ? t('owned') : t('addon')) + '</span>';
+    grid.appendChild(card);
+  });
+}
+
+// ═══════════════════════════════════════════
+// INIT
+// ═══════════════════════════════════════════
+restore();
+injectIcons();
+document.body.dataset.theme = theme;
+document.body.dataset.mode = mode;
+document.getElementById('btn-mode').textContent = mode === 'light' ? '🌙' : '☀️';
+applyLang();
+fillStats();
+renderAll();
+buildThemeMenu();
+buildLangMenu();
+buildManual();
+buildCheat();
+buildCollection();
+buildSituationGrid();
+</script>
+</body>
+</html>
